@@ -2,7 +2,7 @@
 
 require_relative '../config/environment.rb'
 Bundler.require(:development)
+require 'irb'
 
-binding.pry
 
 IRB.start
