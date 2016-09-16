@@ -12,9 +12,8 @@ class Scraper
 
 	def load_gfs(symbol)
 		self.gfs_noko_html = Nokogiri::HTML(open(self.gfs_url(symbol)))
-		return false if self.gfs_noko_html.css("div.fjfe-content").text.include?("- produced no matches.")
+		return nil if self.gfs_noko_html.css("div.fjfe-content").text.include?("- produced no matches.")
 		self.create_stock(symbol)
-		true
 	end
 
 	def create_stock(symbol)
@@ -24,7 +23,7 @@ class Scraper
 		data[:stock][:exchange] = self.gfs_noko_html.css("span.dis-large").text.split("\n")[0]
 		data[:quote] = self.create_quote
 		data[:desc] = self.create_desc
-		self.stock = Stock.new(data)
+		Stock.new(data)
 	end
 
 	def create_quote
