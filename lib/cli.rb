@@ -16,9 +16,13 @@ class Cli
 		while !valid do
 			print "Please enter a ticker symbol: "
 			symbol = gets.strip.upcase
-			self.stock = self.scraper.load_gfs(symbol)
+			# stock_array[0] is a stock if one was succesfully created and nil otherwise.
+			# stock_array[1] indicates whether the symbol cooresponds to a mutual fund.
+			stock_array = self.scraper.load_gfs(symbol)
+			self.stock = stock_array[0]
 			valid = self.stock.nil? ? false : true
 			puts "Invalid ticker symbol." if !valid
+			puts "Mutual funds are not currently not supported." if stock_array[1]
 		end
 		self.display_quote
 	end
