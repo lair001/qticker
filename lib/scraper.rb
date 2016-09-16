@@ -47,7 +47,7 @@ class Scraper
 		data = {}
 		data[:sector] = self.gfs_noko_html.css("a#sector").text
 		data[:industry] = self.gfs_noko_html.css("a#sector+a").text
-		data[:desc] = self.gfs_noko_html.css("div.companySummary").text.gsub("More from Reuters »", "").strip
+		data[:summary] = self.gfs_noko_html.css("div.companySummary").text.gsub("More from Reuters »", "").strip
 		data
 	end
 
