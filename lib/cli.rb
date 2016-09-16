@@ -38,6 +38,17 @@ class Cli
 	end
 
 	def display_desc
+		self.stock.display
+		self.stock.desc.display
+		print "Please enter 1 to redisplay your quote for #{self.stock.symbol}, 2 to  enter another ticker symbol or any other key to exit: "
+		input = gets.strip
+		if input == "1"
+			self.display_quote
+		elsif input == "2"
+			self.ticker_symbol_prompt
+		else
+			return nil
+		end
 	end
 
 end
