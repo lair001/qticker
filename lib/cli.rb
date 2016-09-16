@@ -1,6 +1,6 @@
 class Cli
 
-	attr_accessor :symbol, :scraper
+	attr_accessor :scraper
 
 	def initialize
 		self.scraper = Scraper.new(self)
@@ -14,7 +14,7 @@ class Cli
 		valid = false
 		while !valid do
 			print "Please enter a ticker symbol: "
-			self.symbol = gets.strip
+			symbol = gets.strip
 			valid = self.scraper.load_gfs(symbol)
 			puts "Invalid ticker symbol." if !valid
 		end

@@ -10,4 +10,8 @@ class Stock < Table
 
 	end
 
+	def display_stock_header
+		puts "#{name} (#{exchange}:#{symbol})"
+	end
+
 end
