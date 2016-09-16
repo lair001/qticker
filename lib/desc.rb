@@ -1,0 +1,3 @@
+class Desc < StockAttr
+
+end

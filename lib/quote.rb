@@ -1,0 +1,3 @@
+class Quote < StockAttr
+
+end
