@@ -5,6 +5,7 @@ source "https://rubygems.org"
 # gem "rails"
 gem "nokogiri", '~> 1.6', '>= 1.6.8'
 gem 'require_all', '~> 1.3', '>= 1.3.3'
+gem 'word_wrap', '>=1.0.0'
 
 
 group :development do

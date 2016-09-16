@@ -2,7 +2,7 @@ class Desc < StockAttr
 
 	def display
 		print "#{sector} : #{industry}\n\n"
-		puts "#{summary}"
+		puts "#{summary}".fit
 	end
 
 end

@@ -7,7 +7,7 @@ class Cli
 	end
 
 	def welcome
-		puts "Welcome to Stocks."
+		print "\nWelcome to Stocks.\n"
 		self.ticker_symbol_prompt
 	end
 
@@ -38,13 +38,11 @@ class Cli
 	end
 
 	def option_menu(opt_1_string, opt_1_lambda)
-		puts ""
 		gets
 		puts ""
 		puts "1. #{opt_1_string} for #{self.stock.symbol}."
 		puts "2. Enter another ticker symbol."
 		puts "Enter other key to exit."
-		puts ""
 		input = gets.strip
 		if input == "1"
 			opt_1_lambda.()
