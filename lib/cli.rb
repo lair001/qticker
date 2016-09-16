@@ -20,6 +20,24 @@ class Cli
 			valid = self.stock.nil? ? false : true
 			puts "Invalid ticker symbol." if !valid
 		end
+		self.display_quote
+	end
+
+	def display_quote
+		self.stock.display
+		self.stock.quote.display
+		print "Please enter 1 to display a company description for #{self.stock.symbol}, 2 to enter another ticker symbol or any other key to exit: "
+		input = gets.strip
+		if input == "1"
+			self.display_desc
+		elsif input == "2"
+			self.ticker_symbol_prompt
+		else
+			return nil
+		end
+	end
+
+	def display_desc
 	end
 
 end
