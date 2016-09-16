@@ -26,29 +26,33 @@ class Cli
 	def display_quote
 		self.stock.display
 		self.stock.quote.display
-		gets
-		print "Please enter 1 to display a company description for #{self.stock.symbol}, 2 to enter another ticker symbol or any other key to exit: "
-		input = gets.strip
-		if input == "1"
-			self.display_desc
-		elsif input == "2"
-			self.ticker_symbol_prompt
-		else
-			return nil
-		end
+		opt_1_lambda = -> { self.display_desc }
+		self.option_menu("Display a company description", opt_1_lambda)
 	end
 
 	def display_desc
 		self.stock.display
 		self.stock.desc.display
+		opt_1_lambda = -> { self.display_quote }
+		self.option_menu("Redisplay your quote", opt_1_lambda)
+	end
+
+	def option_menu(opt_1_string, opt_1_lambda)
+		puts ""
 		gets
-		print "Please enter 1 to redisplay your quote for #{self.stock.symbol}, 2 to  enter another ticker symbol or any other key to exit: "
+		puts ""
+		puts "1. #{opt_1_string} for #{self.stock.symbol}."
+		puts "2. Enter another ticker symbol."
+		puts "Enter other key to exit."
+		puts ""
 		input = gets.strip
 		if input == "1"
-			self.display_quote
+			opt_1_lambda.()
 		elsif input == "2"
+			puts ""
 			self.ticker_symbol_prompt
 		else
+			puts ""
 			return nil
 		end
 	end
