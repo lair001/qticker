@@ -11,7 +11,7 @@ class Stock < Table
 	end
 
 	def display
-		puts "#{name} (#{exchange}:#{symbol})\n"
+		print "\n#{name} (#{exchange}:#{symbol})\n\n"
 	end
 
 end

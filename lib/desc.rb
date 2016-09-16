@@ -1,7 +1,7 @@
 class Desc < StockAttr
 
 	def display
-		puts "#{sector} : #{industry}\n"
+		print "#{sector} : #{industry}\n\n"
 		puts "#{summary}"
 	end
 
