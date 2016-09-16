@@ -21,6 +21,7 @@ class Scraper
 		data[:stock][:symbol] = symbol
 		data[:stock][:name] = self.gfs_noko_html.css("div.g-first a").text.match('(?<=All news for ).*(?= »)')[0]
 		data[:stock][:exchange] = self.gfs_noko_html.css("span.dis-large").text.split("\n")[0]
+		data[:stock] = self.nil_to_empty_str(data[:stock])
 		data[:quote] = self.create_quote
 		data[:desc] = self.create_desc
 		Stock.new(data)
@@ -38,8 +39,8 @@ class Scraper
 		data[:volume_avg] = self.gfs_noko_html.css("td[data-snapfield='vol_and_avg']+td").text.strip.split("/")[1]
 		data[:mkt_cap] = self.gfs_noko_html.css("td[data-snapfield='market_cap']+td").text.strip
 		data[:pe_ttm] = self.gfs_noko_html.css("td[data-snapfield='pe_ratio']+td").text.strip
-		data[:div_yld] = self.gfs_noko_html.css("td[data-snapfield='latest_dividend-dividend_yield']+td").text.strip.split("/")[1] + "%"
-		data
+		data[:div_yld] = self.gfs_noko_html.css("td[data-snapfield='latest_dividend-dividend_yield']+td").text.strip.split("/")[1]
+		nil_to_empty_str(data)
 	end
 
 	def create_desc
@@ -47,7 +48,14 @@ class Scraper
 		data[:sector] = self.gfs_noko_html.css("a#sector").text
 		data[:industry] = self.gfs_noko_html.css("a#sector+a").text
 		data[:summary] = self.gfs_noko_html.css("div.companySummary").text.gsub("More from Reuters »", "").strip
-		data
+		nil_to_empty_str(data)
+	end
+
+	# convert any nil values to empty strings to avoid exceptions
+	def nil_to_empty_str(data_hash)
+		data_hash.each do |key, value|
+			data_hash[key] = "" if data_hash.nil?
+		end
 	end
 
 end
