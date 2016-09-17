@@ -60,6 +60,7 @@ class Cli
 
 	def dev_welcome
 		print "\nWelcome to Developer Mode!.\n\n"
+		self.dev_option_menu
 	end
 
 	def dev_option_menu
@@ -72,9 +73,33 @@ class Cli
 		puts "your regularly scheduled program."
 		input = gets.strip.gsub('.', '')
 		if input == "1"
+			stock_array = self.scraper.load_gfs("MSFT", "./spec/fixtures/MSFT.html")
+			self.stock = stock_array[0]
+			valid = self.stock.nil? ? false : true
+			puts "Invalid ticker symbol." if !valid
+			puts "Mutual funds are not currently not supported." if stock_array[1]
+			self.display_quote if valid
 		elsif input == "2"
+			stock_array = self.scraper.load_gfs("IBM", "./spec/fixtures/IBM.html")
+			self.stock = stock_array[0]
+			valid = self.stock.nil? ? false : true
+			puts "Invalid ticker symbol." if !valid
+			puts "Mutual funds are not currently not supported." if stock_array[1]
+			self.display_quote if valid
 		elsif input == "3"
+			stock_array = self.scraper.load_gfs("QQQ", "./spec/fixtures/QQQ.html")
+			self.stock = stock_array[0]
+			valid = self.stock.nil? ? false : true
+			puts "Invalid ticker symbol." if !valid
+			puts "Mutual funds are not currently not supported." if stock_array[1]
+			self.display_quote if valid
 		elsif input == "4"
+			stock_array = self.scraper.load_gfs("FBIOX", "./spec/fixtures/FBIOX.html")
+			self.stock = stock_array[0]
+			valid = self.stock.nil? ? false : true
+			puts "Invalid ticker symbol." if !valid
+			puts "Mutual funds are not currently not supported." if stock_array[1]
+			self.display_quote if valid
 		else
 			return nil
 		end
