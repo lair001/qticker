@@ -19,16 +19,21 @@ class Cli
 			if symbol == "DEV"
 				self.dev_welcome if symbol == "DEV"
 			else
-				# stock_array[0] is a stock if one was succesfully created and nil otherwise.
-				# stock_array[1] indicates whether the symbol cooresponds to a mutual fund.
-				stock_array = self.scraper.load_gfs(symbol)
-				self.stock = stock_array[0]
-				valid = self.stock.nil? ? false : true
-				puts "Invalid ticker symbol." if !valid
-				puts "Mutual funds are not currently not supported." if stock_array[1]
+				valid = self.symbol_validation(symbol, valid)
 			end
 		end
 		self.display_quote
+	end
+
+	def symbol_validation(symbol, valid, fixture_url = nil)
+		# stock_array[0] is a stock if one was succesfully created and nil otherwise.
+		# stock_array[1] indicates whether the symbol cooresponds to a mutual fund.
+		stock_array = self.scraper.load_gfs(symbol, fixture_url)
+		self.stock = stock_array[0]
+		valid = self.stock.nil? ? false : true
+		puts "Invalid ticker symbol." if !valid
+		puts "Mutual funds are not currently not supported." if stock_array[1]
+		valid
 	end
 
 	def display_quote(dev = false)
@@ -78,32 +83,16 @@ class Cli
 		puts "your regularly scheduled program."
 		input = gets.strip.gsub('.', '')
 		if input == "1"
-			stock_array = self.scraper.load_gfs("MSFT", "./spec/fixtures/MSFT.html")
-			self.stock = stock_array[0]
-			valid = self.stock.nil? ? false : true
-			puts "Invalid ticker symbol." if !valid
-			puts "Mutual funds are not currently not supported." if stock_array[1]
+			valid = self.symbol_validation("MSFT", false, "./spec/fixtures/MSFT.html")
 			self.display_quote(true) if valid
 		elsif input == "2"
-			stock_array = self.scraper.load_gfs("IBM", "./spec/fixtures/IBM.html")
-			self.stock = stock_array[0]
-			valid = self.stock.nil? ? false : true
-			puts "Invalid ticker symbol." if !valid
-			puts "Mutual funds are not currently not supported." if stock_array[1]
+			valid = self.symbol_validation("IBM", false, "./spec/fixtures/IBM.html")
 			self.display_quote(true) if valid
 		elsif input == "3"
-			stock_array = self.scraper.load_gfs("QQQ", "./spec/fixtures/QQQ.html")
-			self.stock = stock_array[0]
-			valid = self.stock.nil? ? false : true
-			puts "Invalid ticker symbol." if !valid
-			puts "Mutual funds are not currently not supported." if stock_array[1]
+			valid = self.symbol_validation("QQQ", false, "./spec/fixtures/QQQ.html")
 			self.display_quote(true) if valid
 		elsif input == "4"
-			stock_array = self.scraper.load_gfs("FBIOX", "./spec/fixtures/FBIOX.html")
-			self.stock = stock_array[0]
-			valid = self.stock.nil? ? false : true
-			puts "Invalid ticker symbol." if !valid
-			puts "Mutual funds are not currently not supported." if stock_array[1]
+			valid = self.symbol_validation("FBIOX", false, "./spec/fixtures/FBIOX.html")
 			self.display_quote(true) if valid
 		else
 			puts "Leaving Developer Mode and resuming program."
