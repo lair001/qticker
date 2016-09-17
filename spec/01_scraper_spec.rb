@@ -3,10 +3,12 @@ require 'spec_helper'
 describe 'Scraper' do
 
 	let(:cli){Cli.new}
+	let(:scraper){Scraper.new(cli)}
 
 	describe '#initialize' do
-		it 'makes a new Scraper' do
-			expect(Scraper.new(cli)).to be_a(Scraper)
+		it 'makes a new Scraper that knows about its cli' do
+			expect(scraper).to be_a(Scraper)
+			expect(scraper.cli).to eq(cli)
 		end
 	end
 
