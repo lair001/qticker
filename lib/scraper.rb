@@ -10,10 +10,14 @@ class Scraper
 		"https://www.google.com/finance?q=" + symbol
 	end
 
+	def load_gfs_noko_html(url)
+		self.gfs_noko_html = Nokogiri::HTML(open(url))
+	end
+
 	# Returns an array. Array[0] is a stock if one was succesfully created and nil otherwise.
 	# Array[1] indicates whether the symbol cooresponds to a mutual fund.
 	def load_gfs(symbol)
-		self.gfs_noko_html = Nokogiri::HTML(open(self.gfs_url(symbol)))
+		load_gfs_noko_html(self.gfs_url(symbol))
 		return [nil, true] unless self.gfs_noko_html.text.match('\(MUTF:').nil?
 		return [nil, false] if self.gfs_noko_html.css("div.fjfe-content").text.include?("- produced no matches.")
 		[self.create_stock(symbol), false]

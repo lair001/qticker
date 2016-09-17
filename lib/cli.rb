@@ -14,7 +14,7 @@ class Cli
 	def ticker_symbol_prompt
 		valid = false
 		while !valid do
-			print "Please enter a ticker symbol: "
+			print "\nPlease enter a ticker symbol: "
 			symbol = gets.strip.upcase
 			self.dev_welcome if symbol == "DEV"
 			# stock_array[0] is a stock if one was succesfully created and nil otherwise.
@@ -59,11 +59,25 @@ class Cli
 	end
 
 	def dev_welcome
-		print "\nWelcome to Developer Mode!.\n"
+		print "\nWelcome to Developer Mode!.\n\n"
 	end
 
 	def dev_option_menu
-
+		puts "Please select a fixture to load:"
+		puts "1. Load MSFT.html"
+		puts "2. Load IBM.html"
+		puts "3. Load QQQ.html"
+		puts "4. Load FBIOX.html"
+		puts "Or enter any other key to return to"
+		puts "your regularly scheduled program."
+		input = gets.strip.gsub('.', '')
+		if input == "1"
+		elsif input == "2"
+		elsif input == "3"
+		elsif input == "4"
+		else
+			return nil
+		end
 	end
 
 end
