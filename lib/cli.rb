@@ -16,6 +16,7 @@ class Cli
 		while !valid do
 			print "Please enter a ticker symbol: "
 			symbol = gets.strip.upcase
+			self.dev_welcome if symbol == "DEV"
 			# stock_array[0] is a stock if one was succesfully created and nil otherwise.
 			# stock_array[1] indicates whether the symbol cooresponds to a mutual fund.
 			stock_array = self.scraper.load_gfs(symbol)
@@ -43,20 +44,26 @@ class Cli
 
 	def option_menu(opt_1_string, opt_1_lambda)
 		gets
-		puts ""
 		puts "1. #{opt_1_string} for #{self.stock.symbol}."
 		puts "2. Enter another ticker symbol."
 		puts "Enter other key to exit."
-		input = gets.strip
+		input = gets.strip.gsub('.', '')
 		if input == "1"
 			opt_1_lambda.()
 		elsif input == "2"
 			puts ""
 			self.ticker_symbol_prompt
 		else
-			puts ""
 			return nil
 		end
+	end
+
+	def dev_welcome
+		print "\nWelcome to Developer Mode!.\n"
+	end
+
+	def dev_option_menu
+
 	end
 
 end
