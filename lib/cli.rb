@@ -15,7 +15,7 @@ class Cli
 		valid = false
 		while !valid do
 			print "\nPlease enter a ticker symbol: "
-			symbol = STDIN.gets.strip.upcase
+			symbol = gets.strip.upcase
 			if symbol == "DEV"
 				self.dev_welcome if symbol == "DEV"
 			else
@@ -51,11 +51,11 @@ class Cli
 	end
 
 	def option_menu(opt_1_string, opt_1_lambda, dev = false)
-		STDIN.gets
+		gets
 		puts "1. #{opt_1_string} for #{self.stock.symbol}."
 		puts "2. Enter another ticker symbol."
 		puts "Enter any other key to exit."
-		input = STDIN.gets.strip.gsub('.', '')
+		input = gets.strip.gsub('.', '')
 		if input == "1"
 			opt_1_lambda.()
 		elsif input == "2" && !dev
@@ -81,7 +81,7 @@ class Cli
 		puts "4. Load FBIOX.html"
 		puts "Or enter any other key to return to"
 		puts "your regularly scheduled program."
-		input = STDIN.gets.strip.gsub('.', '')
+		input = gets.strip.gsub('.', '')
 		if input == "1"
 			valid = self.symbol_validation("MSFT", false, true, "./spec/fixtures/MSFT.html")
 		elsif input == "2"
