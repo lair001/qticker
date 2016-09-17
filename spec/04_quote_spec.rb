@@ -1,9 +1,11 @@
 require 'spec_helper.rb'
 
-describe Quote do 
+describe Quote do
 
 
 	let(:data) { {
+				stock: {name: "Fic", symbol: "???", exchange: "FCSE"},
+				quote: {
 				 	price: "123.45",
 					change: "1.23",
 					change_pct: "1.01%",
@@ -12,10 +14,12 @@ describe Quote do
 					volume_avg: "11M",
 					mkt_cap: "5B",
 					pe_ttm: "15.25",
-					div_yld: "2.70"
+					div_yld: "2.70" },
+				desc: {sector: "Fic", description: "A fairy tale"}
 			} }
 
-	let(:quote) {Quote.new(data)}
+	let(:stock) {Stock.new(data)}
+	let(:quote) {stock.quote}
 
 	describe '#initialize' do
 
@@ -29,9 +33,9 @@ describe Quote do
 
 	end
 
-	describe '#display' do 
+	describe '#display' do
 
-		it 'displays a stock description\'s attributes' do 
+		it 'displays a stock description\'s attributes' do
 			output = capture_puts{quote.display}
 			expect(output).to include("Current:  123.45 1.23(1.01%)\n")
 			expect(output).to include("Open:     122.22\n")
