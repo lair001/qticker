@@ -30,14 +30,14 @@ let(:cli){Cli.new}
 			end
 		end
 
-		describe '#create_stock' do 
+		describe '#scrape_stock' do 
 			it 'returns a hash containing 3 hashes' do 
 				cli.scraper.load_gfs('IBM')
-				expect(cli.scraper.create_stock('IBM')).to be_a(Hash)
-				expect(cli.scraper.create_stock('IBM').length).to eq(3)
-				expect(cli.scraper.create_stock('IBM')[:stock]).to be_a(Hash)
-				expect(cli.scraper.create_stock('IBM')[:quote]).to be_a(Hash)
-				expect(cli.scraper.create_stock('IBM')[:desc]).to be_a(Hash)
+				expect(cli.scraper.scrape_stock('IBM')).to be_a(Hash)
+				expect(cli.scraper.scrape_stock('IBM').length).to eq(3)
+				expect(cli.scraper.scrape_stock('IBM')[:stock]).to be_a(Hash)
+				expect(cli.scraper.scrape_stock('IBM')[:quote]).to be_a(Hash)
+				expect(cli.scraper.scrape_stock('IBM')[:desc]).to be_a(Hash)
 			end
 		end
 
