@@ -22,10 +22,9 @@ class Cli
 				valid = self.symbol_validation(symbol, valid)
 			end
 		end
-		self.display_quote
 	end
 
-	def symbol_validation(symbol, valid, fixture_url = nil)
+	def symbol_validation(symbol, valid, dev = false, fixture_url = nil)
 		# stock_array[0] is a stock if one was succesfully created and nil otherwise.
 		# stock_array[1] indicates whether the symbol cooresponds to a mutual fund.
 		stock_array = self.scraper.load_gfs(symbol, fixture_url)
@@ -33,6 +32,7 @@ class Cli
 		valid = self.stock.nil? ? false : true
 		puts "Invalid ticker symbol." if !valid
 		puts "Mutual funds are not currently not supported." if stock_array[1]
+		self.display_quote(dev) if valid
 		valid
 	end
 
@@ -83,17 +83,13 @@ class Cli
 		puts "your regularly scheduled program."
 		input = gets.strip.gsub('.', '')
 		if input == "1"
-			valid = self.symbol_validation("MSFT", false, "./spec/fixtures/MSFT.html")
-			self.display_quote(true) if valid
+			valid = self.symbol_validation("MSFT", false, true, "./spec/fixtures/MSFT.html")
 		elsif input == "2"
-			valid = self.symbol_validation("IBM", false, "./spec/fixtures/IBM.html")
-			self.display_quote(true) if valid
+			valid = self.symbol_validation("IBM", false, true, "./spec/fixtures/IBM.html")
 		elsif input == "3"
-			valid = self.symbol_validation("QQQ", false, "./spec/fixtures/QQQ.html")
-			self.display_quote(true) if valid
+			valid = self.symbol_validation("QQQ", false, true, "./spec/fixtures/QQQ.html")
 		elsif input == "4"
-			valid = self.symbol_validation("FBIOX", false, "./spec/fixtures/FBIOX.html")
-			self.display_quote(true) if valid
+			valid = self.symbol_validation("FBIOX", false, true, "./spec/fixtures/FBIOX.html")
 		else
 			puts "Leaving Developer Mode and resuming program."
 		end
