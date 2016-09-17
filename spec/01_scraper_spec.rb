@@ -17,6 +17,13 @@ describe 'Scraper' do
 		end
 	end
 
+	describe '#load_gfs_noko_html' do 
+		it 'populates a scraper\'s gfs_noko_html attribute given a url' do 
+			cli.scraper.load_gfs_noko_html('https://www.google.com/finance?q=IBM')
+			expect(cli.scraper.gfs_noko_html).to be_a(Nokogiri::HTML::Document)
+		end
+	end
+
 	describe '#load_gfs' do 
 		it 'returns a stock for a valid symbol and whether the entered symbol is a mutual fund' do 
 			expect(cli.scraper.load_gfs('MSFT')).to be_an(Array)

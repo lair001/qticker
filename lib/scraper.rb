@@ -19,7 +19,8 @@ class Scraper
 	def load_gfs(symbol, fixture_url = nil)
 		fixture_url.nil? ? load_gfs_noko_html(self.gfs_url(symbol)) : load_gfs_noko_html(fixture_url)
 		return [nil, true] unless self.gfs_noko_html.text.match('\(MUTF:').nil?
-		return [nil, false] if self.gfs_noko_html.css("div.fjfe-content").text.include?("- produced no matches.")
+		return [nil, false] if self.gfs_noko_html.css("span.pr").text.strip == "" # checks whether the page lists a price
+	#	return [nil, false] if self.gfs_noko_html.css("div.fjfe-content").text.include?("- produced no matches.")
 		[self.create_stock(symbol), false]
 	end
 
