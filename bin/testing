@@ -1,9 +1,0 @@
-#!/usr/bin/env ruby
-
-require_relative '../config/environment.rb'
-Bundler.require(:development)
-require 'irb'
-
-cli = Cli.new
-
-binding.pry
