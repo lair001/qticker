@@ -30,6 +30,13 @@ let(:cli){Cli.new}
 			end
 		end
 
+		describe '#create_stock' do
+			it 'returns a stock' do
+				cli.scraper.load_gfs('GE')
+				expect(cli.scraper.create_stock('GE')).to be_a(Stock)
+			end
+		end
+
 		describe '#scrape_stock' do 
 			it 'returns a hash containing 3 hashes' do 
 				cli.scraper.load_gfs('IBM')
@@ -38,6 +45,12 @@ let(:cli){Cli.new}
 				expect(cli.scraper.scrape_stock('IBM')[:stock]).to be_a(Hash)
 				expect(cli.scraper.scrape_stock('IBM')[:quote]).to be_a(Hash)
 				expect(cli.scraper.scrape_stock('IBM')[:desc]).to be_a(Hash)
+			end
+		end
+
+		describe '#nil_to_empty_string' do
+			it 'converts nil values in a hash to empty strings' do 
+				expect(cli.scraper.nil_to_empty_str({n1: nil, n2: 'sandy', n3: nil, n4: nil, n5: 'bill'})).to eq({n1: '', n2: 'sandy', n3: '', n4: '', n5: 'bill'})
 			end
 		end
 

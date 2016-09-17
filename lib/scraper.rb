@@ -70,7 +70,7 @@ class Scraper
 	# convert any nil values to empty strings to avoid exceptions
 	def nil_to_empty_str(data_hash)
 		data_hash.each do |key, value|
-			data_hash[key] = "" if data_hash.nil?
+			data_hash[key] = "" if data_hash[key].nil?
 		end
 	end
 
