@@ -5,8 +5,8 @@ class Stock < Table
 	def initialize(data)
 
 		super(data[:stock])
-		self.quote = Quote.new(data[:quote])
-		self.desc = Desc.new(data[:desc])
+		self.quote = Quote.new(data[:quote], self)
+		self.desc = Desc.new(data[:desc], self)
 
 	end
 
