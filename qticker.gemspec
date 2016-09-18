@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.license = 'MIT'
   s.homepage = 'https://github.com/lair001/stocks-cli-gem'
   s.authors = ['Samuel Lair']
-  s.email = 'lair001@gmail.com'
+  s.email = 'lair002@gmail.com'
   s.files = `git ls-files`.split(/\n/).keep_if{ |x| x.include?("lib/") || x.include?("config/") }
   s.executables   = ["qticker"]
   s.require_paths = ["config", "lib", "lib/fixtures"]
