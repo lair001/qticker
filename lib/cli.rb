@@ -83,13 +83,13 @@ class Cli
 		puts "your regularly scheduled program."
 		input = gets.strip.gsub('.', '')
 		if input == "1"
-			valid = self.symbol_validation("MSFT", false, true, "./spec/fixtures/MSFT.html")
+			valid = self.symbol_validation("MSFT", false, true, "./lib/fixtures/MSFT.html")
 		elsif input == "2"
-			valid = self.symbol_validation("IBM", false, true, "./spec/fixtures/IBM.html")
+			valid = self.symbol_validation("IBM", false, true, "./lib/fixtures/IBM.html")
 		elsif input == "3"
-			valid = self.symbol_validation("QQQ", false, true, "./spec/fixtures/QQQ.html")
+			valid = self.symbol_validation("QQQ", false, true, "./lib/fixtures/QQQ.html")
 		elsif input == "4"
-			valid = self.symbol_validation("FBIOX", false, true, "./spec/fixtures/FBIOX.html")
+			valid = self.symbol_validation("FBIOX", false, true, "./lib/fixtures/FBIOX.html")
 		else
 			puts "Leaving Developer Mode and resuming program."
 		end
