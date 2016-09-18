@@ -31,7 +31,13 @@ class Cli
 		self.stock = stock_array[0]
 		valid = self.stock.nil? ? false : true
 		puts "Invalid ticker symbol." if !valid
-		puts "Mutual funds are not currently not supported." if stock_array[1]
+		if stock_array[1]
+			puts "Mutual funds are not currently not supported."
+			if dev
+				puts ""
+				dev_option_menu
+			end
+		end
 		self.display_quote(dev) if valid
 		valid
 	end
