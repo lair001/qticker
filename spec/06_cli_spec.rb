@@ -1,13 +1,14 @@
 require 'spec_helper.rb'
 
-describe Cli do 
+describe MainCli do 
 
-	let(:cli){Cli.new}
+	let(:cli){MainCli.new}
 
 	describe '#intialize' do
-		it 'initializes a cli with a scraper' do
-			expect(cli).to be_a(Cli)
+		it 'initializes a MainCli with a Scraper and a DevCli' do
+			expect(cli).to be_a(MainCli)
 			expect(cli.scraper).to be_a(Scraper)
+			expect(cli.dev).to be_a(DevCli)
 		end
 	end
 
