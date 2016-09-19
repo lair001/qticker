@@ -1,50 +1,54 @@
 require 'spec_helper.rb'
 
-describe MainCli do 
+describe 'Cli' do 
 
-	let(:cli){MainCli.new}
+	let(:cli){Cli.new}
+
+	let(:data) { {
+				stock: {name: "Fic", symbol: "???", exchange: "FCSE"},
+				quote: {price: "1.23", vol: "123"},
+				desc: {sector: "Fic", description: "A fairy tale"}
+			} }
 
 	describe '#intialize' do
-		it 'initializes a MainCli with a Scraper and a DevCli' do
-			expect(cli).to be_a(MainCli)
+		it 'initializes a Cli with a Scraper' do
+			expect(cli).to be_a(Cli)
 			expect(cli.scraper).to be_a(Scraper)
-			expect(cli.dev).to be_a(DevCli)
+			expect(cli.scraper.cli).to eq(cli)
 		end
 	end
 
-	describe '#welcome, #ticker_symbol_prompt, #symbol_validation, #display_quote, #display_desc, #option_menu' do 
-		it 'welcomes the user and allows the user to enter a stock symbol and view information on the company.' do 
-			allow(cli).to receive(:gets).and_return("IBM", "\n", "1", "\n", "\n")
-			output = capture_puts{cli.welcome("Quick Ticker", -> {cli.ticker_symbol_prompt})}
-			expect(output).to include("Welcome to Quick Ticker!\n\nPlease enter a ticker symbol:")
-			expect(output).to include("International Business Machines Corp. (NYSE:IBM)\n\nCurrent:")
-			expect(output).to include("International Business Machines Corp. (NYSE:IBM)\n\nTechnology : IT Services & Consulting - NEC")
-			expect(output).to include("1. Display a company description for IBM.\n2. Enter another ticker symbol.\nEnter any other key to exit.")
-			expect(output).to include("1. Redisplay your quote for IBM.\n2. Enter another ticker symbol.\nEnter any other key to exit.")
+	describe "#welcome" do 
+		it 'welcomes the user and calls a lambda' do 
+			mode_name = "Hello World"
+			mode_lambda = -> { puts "Hello World!" }
+			output = capture_puts{ cli.welcome(mode_name, mode_lambda) }
+			expect(output).to include("Welcome to Hello World!\nHello World!\n")
 		end
 	end
 
-	describe '#symbol validation' do 
-		it 'prompts the user to input another ticker symbol if the user inputs an invalid symbol or a symbol for a mutual fund' do 
-			allow(cli).to receive(:gets).and_return("a1b2c3d4", "FBIOX", "IBM", "\n", "1", "\n", "\n")
-			output = capture_puts{cli.welcome("Quick Ticker", -> {cli.ticker_symbol_prompt})}
-			expect(output).to include("Invalid ticker symbol.\n\nPlease enter a ticker symbol:")
-			expect(output).to include("Invalid ticker symbol.\nMutual funds are not currently not supported.\n\nPlease enter a ticker symbol:")
+	describe '#stock_option_menu' do 
+		it 'displays a list menu and returns the user\'s input' do 
+			cli.stock = Stock.new(data)
+			allow(cli).to receive(:gets).and_return("\n", "1")
+			output = capture_puts{cli.stock_option_menu("Display a company description") }
+			expect(output).to include("1. Display a company description for ???.")
+			allow(cli).to receive(:gets).and_return("\n", "1")
+			expect(cli.stock_option_menu("Display a company description")).to eq("1")
 		end
 	end
 
-	describe '#dev_welcome' do 
-		it 'allows the user to load html files in spec/fixtures if the user inputs DEV at the ticker symbol prompt' do 
-			allow(cli).to receive(:gets).and_return("DEV", "3", "\n", "1", "\n", "\n", "IBM", "\n", "\n")
-			output = capture_puts{cli.welcome("Quick Ticker", -> {cli.ticker_symbol_prompt})}
-			expect(output).to include("Welcome to Developer Mode!\n\nPlease select a fixture to load:")
-			expect(output).to include("Leaving Developer Mode and resuming program.")
-			expect(output).to include("PowerShares QQQ Trust, Series 1 (ETF) (NASDAQ:QQQ)")
-			expect(output).to include("Open:     115.89")
-			expect(output).to include("Financials : Investment Trusts")
-			expect(output).to include("objective is to provide investment results that generally")
+	describe "#symbol_validation" do 
+
+		it 'returns whether a stock symbol is valid and whether it is a mutual fund' do 
+			expect(cli.symbol_validation('GE', false)).to eq([true, false])
+			expect(cli.symbol_validation('FBIOX', false)).to eq([false, true])
+			expect(cli.symbol_validation('a1b2c3d4', false)).to eq([false, false])
 		end
+
 	end
+
+	# test coverage for #display_quote, #display_desc provided in tests for MainCli and DevCli
 
 
 end
