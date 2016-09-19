@@ -46,15 +46,13 @@ class Cli
 	def display_quote(dev = false)
 		self.stock.display
 		self.stock.quote.display
-		opt_1_lambda = -> { self.display_desc(dev) }
-		self.option_menu("Display a company description", opt_1_lambda, dev)
+		self.option_menu("Display a company description", -> { self.display_desc(dev) }, dev)
 	end
 
 	def display_desc(dev = false)
 		self.stock.display
 		self.stock.desc.display
-		opt_1_lambda = -> { self.display_quote(dev) }
-		self.option_menu("Redisplay your quote", opt_1_lambda, dev)
+		self.option_menu("Redisplay your quote", -> { self.display_desc(dev) }, dev)
 	end
 
 	def option_menu(opt_1_string, opt_1_lambda, dev = false)
