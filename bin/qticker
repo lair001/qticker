@@ -4,4 +4,4 @@ require_relative '../config/environment.rb'
 
 cli = Cli.new
 
-cli.welcome
+cli.welcome("Quick Ticker", -> {cli.ticker_symbol_prompt})

@@ -6,10 +6,11 @@ class Cli
 		self.scraper = Scraper.new(self)
 	end
 
-	def welcome
-		print "\nWelcome to Stocks.\n"
-		self.ticker_symbol_prompt
+	def welcome(mode_name, mode_lambda)
+		print "\nWelcome to " + mode_name + "!\n"
+		mode_lambda.()
 	end
+
 
 	def ticker_symbol_prompt
 		valid = false
@@ -17,7 +18,7 @@ class Cli
 			print "\nPlease enter a ticker symbol: "
 			symbol = gets.strip.upcase
 			if symbol == "DEV"
-				self.dev_welcome if symbol == "DEV"
+				self.welcome("Developer Mode", -> {self.dev_option_menu}) if symbol == "DEV"
 			else
 				valid = self.symbol_validation(symbol, valid)
 			end
@@ -74,13 +75,8 @@ class Cli
 		end
 	end
 
-	def dev_welcome
-		print "\nWelcome to Developer Mode!\n\n"
-		self.dev_option_menu
-	end
-
 	def dev_option_menu
-		puts "Please select a fixture to load:"
+		puts "\nPlease select a fixture to load:"
 		puts "1. Load MSFT.html"
 		puts "2. Load IBM.html"
 		puts "3. Load QQQ.html"
