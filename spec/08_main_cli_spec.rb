@@ -5,7 +5,7 @@ describe 'MainCli' do
 	let(:cli){MainCli.new}
 
 	describe '#intialize' do
-		it 'initializes a MainCli with a Scraper and a DevCli' do
+		it 'initializes a MainCli with a Scraper a DevCli' do
 			expect(cli).to be_a(MainCli)
 			expect(cli.scraper).to be_a(Scraper)
 			expect(cli.dev).to be_a(DevCli)

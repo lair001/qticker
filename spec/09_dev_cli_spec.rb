@@ -5,6 +5,15 @@ describe 'DevCli' do
 	let(:main_cli){MainCli.new}
 	let(:cli){main_cli.dev}
 
+	describe '#initialize' do 
+		it 'initializes a DevCli that knows about its main cli' do 
+			main = MainCli.new
+			dev = DevCli.new(main)
+			expect(dev).to be_a(DevCli)
+			expect(dev.main).to equal(main)
+		end
+	end
+
 	describe '#option_menu, #stock_option_menu, #symbol_validation' do
 		it 'allows the user to load html files in spec/fixtures if the user inputs DEV at the ticker symbol prompt' do
 			# allow(main_cli).to receive(:gets).and_return("DEV", "3", "\n", "1", "\n", "\n", "IBM", "\n", "\n")
