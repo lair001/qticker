@@ -1,6 +1,6 @@
 require 'spec_helper.rb'
 
-describe Desc do
+describe 'Desc' do
 
 
 	let(:data) { {

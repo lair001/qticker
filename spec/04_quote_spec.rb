@@ -1,6 +1,6 @@
 require 'spec_helper.rb'
 
-describe Quote do
+describe 'Quote' do
 
 
 	let(:data) { {
