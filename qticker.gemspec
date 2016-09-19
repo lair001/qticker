@@ -1,15 +1,15 @@
 Gem::Specification.new do |s|
 
   s.name = 'qticker'
-  s.version = '1.0.3'
-  s.date = '2016-09-18'
+  s.version = '1.0.4'
+  s.date = '2016-09-19'
   s.summary = 'Quick Ticker: Enter a ticker symbol and get information.'
   s.description = 'This gem allows the user to enter a ticker symbol and retrieve a quote and company description.'
   s.license = 'MIT'
   s.homepage = 'https://github.com/lair001/stocks-cli-gem'
   s.authors = ['Samuel Lair']
   s.email = 'lair002@gmail.com'
-  s.files = `git ls-files`.split(/\n/).keep_if{ |x| x.include?("lib/") || x.include?("config/") }
+  s.files = `git ls-files`.split(/\n/).keep_if{ |x| x.include?("lib/") || x.include?("config/") } << 'Gemfile'
   s.executables   = ["qticker"]
   s.require_paths = ["config", "lib", "lib/fixtures"]
 
