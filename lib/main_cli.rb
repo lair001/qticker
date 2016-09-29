@@ -1,6 +1,6 @@
 class MainCli < Cli
 
-	attr_accessor :scraper, :dev
+	attr_accessor :dev
 
 	def initialize(cli = nil)
 		super(cli)
