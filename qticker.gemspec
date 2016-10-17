@@ -9,9 +9,9 @@ Gem::Specification.new do |s|
   s.homepage = 'https://github.com/lair001/qticker'
   s.authors = ['Samuel Lair']
   s.email = 'lair002@gmail.com'
-  s.files = `git ls-files`.split(/\n/).keep_if{ |x| x.include?("lib/") || x.include?("config/") }
+  s.files = `git ls-files`.split(/\n/).keep_if{ |x| x.include?("lib/") }
   s.executables   = ["qticker"]
-  s.require_paths = ["config", "lib", "lib/fixtures"]
+  s.require_paths = ["lib", "lib/fixtures"]
 
   s.required_ruby_version = ">= 2.3.0"
 
