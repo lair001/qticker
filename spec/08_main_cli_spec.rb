@@ -18,7 +18,7 @@ describe 'MainCli' do
 			output = capture_puts{cli.welcome("Quick Ticker", -> {cli.ticker_symbol_prompt})}
 			expect(output).to include("Welcome to Quick Ticker!\n\nPlease enter a ticker symbol:")
 			expect(output).to include("International Business Machines Corp. (NYSE:IBM)\n\nCurrent:")
-			expect(output).to include("International Business Machines Corp. (NYSE:IBM)\n\nTechnology : IT Services & Consulting - NEC")
+			expect(output).to include("International Business Machines Corp. (NYSE:IBM)\n\nTechnology : Technology Consulting & Outsourcing Services")
 			expect(output).to include("1. Display a company description for IBM.\n2. Enter another ticker symbol.\nEnter any other key to exit.")
 			expect(output).to include("1. Redisplay your quote for IBM.\n2. Enter another ticker symbol.\nEnter any other key to exit.")
 		end
