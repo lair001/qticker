@@ -1,8 +1,12 @@
-class StockDescription < QuickTicker::StockAttribute
+module QuickTicker
 
-	def display
-		print "#{sector} : #{industry}\n\n"
-		puts "#{summary}".fit
+	class StockDescription < QuickTicker::StockAttribute
+
+		def display
+			print "#{sector} : #{industry}\n\n"
+			puts "#{summary}".fit
+		end
+
 	end
 
 end

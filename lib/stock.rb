@@ -1,17 +1,21 @@
-class Stock < QuickTicker::Table
+module QuickTicker
 
-	attr_accessor :quote, :description
+	class Stock < QuickTicker::Table
 
-	def initialize(data)
+		attr_accessor :quote, :description
 
-		super(data[:stock])
-		self.quote = StockQuote.new(data[:quote], self)
-		self.description = StockDescription.new(data[:description], self)
+		def initialize(data)
 
-	end
+			super(data[:stock])
+			self.quote = QuickTicker::StockQuote.new(data[:quote], self)
+			self.description = QuickTicker::StockDescription.new(data[:description], self)
 
-	def display
-		print "\n#{name} (#{exchange}:#{symbol})\n\n"
+		end
+
+		def display
+			print "\n#{name} (#{exchange}:#{symbol})\n\n"
+		end
+
 	end
 
 end

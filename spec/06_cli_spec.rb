@@ -13,7 +13,7 @@ describe 'Cli' do
 	describe '#intialize' do
 		it 'initializes a Cli with a Scraper' do
 			expect(cli).to be_a(QuickTicker::Cli)
-			expect(cli.scraper).to be_a(Scraper)
+			expect(cli.scraper).to be_a(QuickTicker::Scraper)
 			expect(cli.scraper.cli).to eq(cli)
 		end
 	end
@@ -29,7 +29,7 @@ describe 'Cli' do
 
 	describe '#stock_option_menu' do 
 		it 'displays a list menu and returns the user\'s input' do 
-			cli.stock = Stock.new(data)
+			cli.stock = QuickTicker::Stock.new(data)
 			allow(cli).to receive(:gets).and_return("\n", "1")
 			output = capture_puts{cli.stock_option_menu("Display a company description") }
 			expect(output).to include("1. Display a company description for ???.")

@@ -23,13 +23,13 @@ describe 'StockDescription' do
 					}
 			} }
 
-	let(:stock) {Stock.new(data)}
+	let(:stock) {QuickTicker::Stock.new(data)}
 	let(:description) {stock.description}
 
 	describe '#initialize' do
 
 		it 'initializes a stock description from data' do
-			expect(description).to be_a(StockDescription)
+			expect(description).to be_a(QuickTicker::StockDescription)
 			expect(description.sector).to eq("Fiction")
 			expect(description.industry).to eq("Literature")
 			expect(description.summary).to eq("A lark")

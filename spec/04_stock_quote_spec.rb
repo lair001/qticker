@@ -18,13 +18,13 @@ describe 'StockQuote' do
 				description: {sector: "Fic", description: "A fairy tale"}
 			} }
 
-	let(:stock) {Stock.new(data)}
+	let(:stock) {QuickTicker::Stock.new(data)}
 	let(:quote) {stock.quote}
 
 	describe '#initialize' do
 
 		it 'initializes a stock description from data' do
-			expect(quote).to be_a(StockQuote)
+			expect(quote).to be_a(QuickTicker::StockQuote)
 			expect(quote.price).to eq("123.45")
 			expect(quote.change).to eq("1.23")
 			expect(quote.change_pct).to eq("1.01%")

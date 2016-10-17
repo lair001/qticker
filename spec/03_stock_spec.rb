@@ -10,10 +10,10 @@ describe 'Stock' do
 
 	describe '#initialize' do
 		it 'initializes a stock with a quote and a description' do
-			stock = Stock.new(data)
-			expect(stock).to be_a(Stock)
-			expect(stock.quote).to be_a(StockQuote)
-			expect(stock.description).to be_a(StockDescription)
+			stock = QuickTicker::Stock.new(data)
+			expect(stock).to be_a(QuickTicker::Stock)
+			expect(stock.quote).to be_a(QuickTicker::StockQuote)
+			expect(stock.description).to be_a(QuickTicker::StockDescription)
 			expect(stock.name).to eq("Fic")
 			expect(stock.symbol).to eq("???")
 			expect(stock.exchange).to eq("FCSE")
@@ -26,7 +26,7 @@ describe 'Stock' do
 
 	describe '#display' do 
 		it 'displays a stock\'s attributes' do 
-			stock = Stock.new(data)
+			stock = QuickTicker::Stock.new(data)
 			output = capture_puts{stock.display}
 			expect(output).to include("Fic (FCSE:???)")
 		end

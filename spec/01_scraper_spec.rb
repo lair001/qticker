@@ -3,11 +3,11 @@ require 'spec_helper'
 describe 'Scraper' do
 
 	let(:cli){QuickTicker::Cli.new}
-	let(:scraper){Scraper.new(cli)}
+	let(:scraper){QuickTicker::Scraper.new(cli)}
 
 	describe '#initialize' do
 		it 'makes a new Scraper that knows about its cli' do
-			expect(scraper).to be_a(Scraper)
+			expect(scraper).to be_a(QuickTicker::Scraper)
 			expect(scraper.cli).to eq(cli)
 		end
 	end
@@ -29,7 +29,7 @@ describe 'Scraper' do
 	describe '#load_gfs' do 
 		it 'returns a stock for a valid symbol and whether the entered symbol is a mutual fund' do 
 			expect(cli.scraper.load_gfs('MSFT')).to be_an(Array)
-			expect(cli.scraper.load_gfs('MSFT')[0]).to be_a(Stock)
+			expect(cli.scraper.load_gfs('MSFT')[0]).to be_a(QuickTicker::Stock)
 			expect(cli.scraper.load_gfs('MSFT')[1]).to eq(false)
 			expect(cli.scraper.load_gfs('FBIOX')[0]).to eq(nil)
 			expect(cli.scraper.load_gfs('FBIOX')[1]).to eq(true)
@@ -41,7 +41,7 @@ describe 'Scraper' do
 	describe '#create_stock' do
 		it 'returns a stock' do
 			cli.scraper.load_gfs('GE')
-			expect(cli.scraper.create_stock('GE')).to be_a(Stock)
+			expect(cli.scraper.create_stock('GE')).to be_a(QuickTicker::Stock)
 		end
 	end
 

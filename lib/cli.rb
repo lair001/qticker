@@ -5,7 +5,7 @@ module QuickTicker
 		attr_accessor :stock, :scraper
 
 		def initialize(cli = nil)
-			self.scraper = Scraper.new(self)
+			self.scraper = QuickTicker::Scraper.new(self)
 		end
 
 		def welcome(mode_name, mode_lambda)

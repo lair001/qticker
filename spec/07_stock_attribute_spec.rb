@@ -9,7 +9,7 @@ describe 'StockAttribute' do
 				} }
   let(:attribute_data) {{symbol: "FIC", name: "Fiction"}}
 
-  let(:stock) {Stock.new(stock_data)}
+  let(:stock) {QuickTicker::Stock.new(stock_data)}
   let(:stock_attribute) {QuickTicker::StockAttribute.new(attribute_data, stock)}
 
   describe '#initialize' do
