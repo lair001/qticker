@@ -13,14 +13,18 @@ module QuickTicker
 			mode_lambda.()
 		end
 
+		def display_stock_header
+			print "\n#{self.stock.name} (#{self.stock.exchange}:#{self.stock.symbol})\n\n"
+		end
+
 		def display_stock_quote
-			self.stock.display
+			self.display_stock_header
 			self.stock.quote.display
 			self.stock_option_menu("Display a company description", -> { self.display_stock_description })
 		end
 
 		def display_stock_description
-			self.stock.display
+			self.display_stock_header
 			self.stock.description.display
 			self.stock_option_menu("Redisplay your quote", -> { self.display_stock_quote })
 		end

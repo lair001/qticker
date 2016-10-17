@@ -12,10 +12,6 @@ module QuickTicker
 
 		end
 
-		def display
-			print "\n#{name} (#{exchange}:#{symbol})\n\n"
-		end
-
 	end
 
 end

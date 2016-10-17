@@ -49,6 +49,16 @@ describe 'Cli' do
 
 	end
 
+	describe '#display_stock_header' do 
+
+		it "displays a header comprising attributes of the Cli's stock" do 
+			cli.stock = QuickTicker::Stock.new(data)
+			output = capture_puts{cli.display_stock_header}
+			expect(output).to include("Fic (FCSE:???)")
+		end
+
+	end
+
 	# test coverage for #display_quote, #display_desc provided in tests for MainCli and DevCli
 
 

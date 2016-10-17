@@ -24,12 +24,4 @@ describe 'Stock' do
 		end
 	end
 
-	describe '#display' do 
-		it 'displays a stock\'s attributes' do 
-			stock = QuickTicker::Stock.new(data)
-			output = capture_puts{stock.display}
-			expect(output).to include("Fic (FCSE:???)")
-		end
-	end
-
 end
