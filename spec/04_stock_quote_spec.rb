@@ -15,7 +15,7 @@ describe 'StockQuote' do
 					mkt_cap: "5B",
 					pe_ttm: "15.25",
 					div_yld: "2.70" },
-				description: {sector: "Fic", description: "A fairy tale"}
+				description: {sector: "Fic", summary: "A fairy tale"}
 			} }
 
 	let(:stock) {QuickTicker::Stock.new(data)}

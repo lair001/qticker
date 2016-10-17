@@ -5,7 +5,7 @@ describe 'Stock' do
 	let(:data) { {
 					stock: {name: "Fic", symbol: "???", exchange: "FCSE"},
 					quote: {price: "1.23", vol: "123"},
-					description: {sector: "Fic", description: "A fairy tale"}
+					description: {sector: "Fic", summary: "A fairy tale"}
 				} }
 
 	describe '#initialize' do
@@ -20,7 +20,7 @@ describe 'Stock' do
 			expect(stock.quote.price).to eq("1.23")
 			expect(stock.quote.vol).to eq("123")
 			expect(stock.description.sector).to eq("Fic")
-			expect(stock.description.description).to eq("A fairy tale")
+			expect(stock.description.summary).to eq("A fairy tale")
 		end
 	end
 
