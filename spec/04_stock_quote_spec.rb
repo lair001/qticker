@@ -1,6 +1,6 @@
 require 'spec_helper.rb'
 
-describe 'Quote' do
+describe 'StockQuote' do
 
 
 	let(:data) { {
@@ -15,7 +15,7 @@ describe 'Quote' do
 					mkt_cap: "5B",
 					pe_ttm: "15.25",
 					div_yld: "2.70" },
-				desc: {sector: "Fic", description: "A fairy tale"}
+				description: {sector: "Fic", description: "A fairy tale"}
 			} }
 
 	let(:stock) {Stock.new(data)}
@@ -24,7 +24,7 @@ describe 'Quote' do
 	describe '#initialize' do
 
 		it 'initializes a stock description from data' do
-			expect(quote).to be_a(Quote)
+			expect(quote).to be_a(StockQuote)
 			expect(quote.price).to eq("123.45")
 			expect(quote.change).to eq("1.23")
 			expect(quote.change_pct).to eq("1.01%")

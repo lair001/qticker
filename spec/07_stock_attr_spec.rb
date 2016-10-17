@@ -5,7 +5,7 @@ describe 'StockAttr' do
   let(:stock_data) { {
 					stock: {name: "Fic", symbol: "???", exchange: "FCSE"},
 					quote: {price: "1.23", vol: "123"},
-					desc: {sector: "Fic", description: "A fairy tale"}
+					description: {sector: "Fic", description: "A fairy tale"}
 				} }
   let(:attr_data) {{symbol: "FIC", name: "Fiction"}}
 

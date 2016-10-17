@@ -1,4 +1,4 @@
-class Quote < StockAttr
+class StockQuote < StockAttr
 
 	def display
 		puts "Current:  #{price} #{change}(#{change_pct})"

@@ -52,7 +52,7 @@ describe 'Scraper' do
 			expect(cli.scraper.scrape_stock('IBM').length).to eq(3)
 			expect(cli.scraper.scrape_stock('IBM')[:stock]).to be_a(Hash)
 			expect(cli.scraper.scrape_stock('IBM')[:quote]).to be_a(Hash)
-			expect(cli.scraper.scrape_stock('IBM')[:desc]).to be_a(Hash)
+			expect(cli.scraper.scrape_stock('IBM')[:description]).to be_a(Hash)
 		end
 	end
 

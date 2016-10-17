@@ -1,6 +1,6 @@
 require 'spec_helper.rb'
 
-describe 'Desc' do
+describe 'StockDescription' do
 
 
 	let(:data) { {
@@ -16,7 +16,7 @@ describe 'Desc' do
 					pe_ttm: "15.25",
 					div_yld: "2.70"
 					},
-				desc: {
+				description: {
 					sector: "Fiction",
 					industry: "Literature",
 					summary: "A lark"
@@ -24,15 +24,15 @@ describe 'Desc' do
 			} }
 
 	let(:stock) {Stock.new(data)}
-	let(:desc) {stock.desc}
+	let(:description) {stock.description}
 
 	describe '#initialize' do
 
 		it 'initializes a stock description from data' do
-			expect(desc).to be_a(Desc)
-			expect(desc.sector).to eq("Fiction")
-			expect(desc.industry).to eq("Literature")
-			expect(desc.summary).to eq("A lark")
+			expect(description).to be_a(StockDescription)
+			expect(description.sector).to eq("Fiction")
+			expect(description.industry).to eq("Literature")
+			expect(description.summary).to eq("A lark")
 		end
 
 	end
@@ -40,7 +40,7 @@ describe 'Desc' do
 	describe '#display' do
 
 		it 'displays a stock description\'s attributes' do
-			output = capture_puts{desc.display}
+			output = capture_puts{description.display}
 			expect(output).to include("Fiction : Literature")
 			expect(output).to include("\nA lark")
 		end

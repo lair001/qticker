@@ -11,16 +11,16 @@ class Cli
 		mode_lambda.()
 	end
 
-	def display_quote
+	def display_stock_quote
 		self.stock.display
 		self.stock.quote.display
-		self.stock_option_menu("Display a company description", -> { self.display_desc })
+		self.stock_option_menu("Display a company description", -> { self.display_stock_description })
 	end
 
-	def display_desc
+	def display_stock_description
 		self.stock.display
-		self.stock.desc.display
-		self.stock_option_menu("Redisplay your quote", -> { self.display_quote })
+		self.stock.description.display
+		self.stock_option_menu("Redisplay your quote", -> { self.display_stock_quote })
 	end
 
 	def stock_option_menu(opt_1_string, opt_1_lambda = nil)
@@ -39,7 +39,7 @@ class Cli
 		valid = self.stock.nil? ? false : true
 		puts "Invalid ticker symbol." if !valid
 		puts "Mutual funds are not currently not supported." if stock_array[1]
-		self.display_quote if valid
+		self.display_stock_quote if valid
 		# returns an array.
 		# array[0] - whether the entered symbol was valid
 		# array[1] = stock_array[1] - whether the entered

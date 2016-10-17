@@ -39,12 +39,12 @@ class Scraper
 		end
 		data[:stock][:exchange] = self.gfs_noko_html.css("span.dis-large").text.split("\n")[0]
 		data[:stock] = self.nil_to_empty_str(data[:stock])
-		data[:quote] = self.scrape_quote
-		data[:desc] = self.scrape_desc
+		data[:quote] = self.scrape_stock_quote
+		data[:description] = self.scrape_stock_description
 		data
 	end
 
-	def scrape_quote
+	def scrape_stock_quote
 		data = {}
 		data[:price] = self.gfs_noko_html.css("span.pr").text.strip
 		data[:change] = self.gfs_noko_html.css("div.nwp span.bld").text.split("\n")[0]
@@ -64,7 +64,7 @@ class Scraper
 		nil_to_empty_str(data)
 	end
 
-	def scrape_desc
+	def scrape_stock_description
 		data = {}
 		data[:sector] = self.gfs_noko_html.css("a#sector").text
 		data[:industry] = self.gfs_noko_html.css("a#sector+a").text

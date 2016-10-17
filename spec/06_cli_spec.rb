@@ -7,7 +7,7 @@ describe 'Cli' do
 	let(:data) { {
 				stock: {name: "Fic", symbol: "???", exchange: "FCSE"},
 				quote: {price: "1.23", vol: "123"},
-				desc: {sector: "Fic", description: "A fairy tale"}
+				description: {sector: "Fic", description: "A fairy tale"}
 			} }
 
 	describe '#intialize' do

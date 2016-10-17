@@ -1,12 +1,12 @@
 class Stock < Table
 
-	attr_accessor :quote, :desc
+	attr_accessor :quote, :description
 
 	def initialize(data)
 
 		super(data[:stock])
-		self.quote = Quote.new(data[:quote], self)
-		self.desc = Desc.new(data[:desc], self)
+		self.quote = StockQuote.new(data[:quote], self)
+		self.description = StockDescription.new(data[:description], self)
 
 	end
 
