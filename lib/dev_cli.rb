@@ -16,14 +16,15 @@ class DevCli < Cli
 		puts "Or enter any other key to return to"
 		puts "your regularly scheduled program."
 		input = gets.strip.gsub('.', '')
+		path = File.expand_path(File.dirname(__FILE__)) + '/fixtures/'
 		if input == "1"
-			valid = self.symbol_validation("MSFT", false, "./lib/fixtures/MSFT.html")
+			valid = self.symbol_validation("MSFT", false, path + "MSFT.html")
 		elsif input == "2"
-			valid = self.symbol_validation("IBM", false, "./lib/fixtures/IBM.html")
+			valid = self.symbol_validation("IBM", false, path + "IBM.html")
 		elsif input == "3"
-			valid = self.symbol_validation("QQQ", false, "./lib/fixtures/QQQ.html")
+			valid = self.symbol_validation("QQQ", false, path + "QQQ.html")
 		elsif input == "4"
-			valid = self.symbol_validation("FBIOX", false, "./lib/fixtures/FBIOX.html")
+			valid = self.symbol_validation("FBIOX", false, path + "FBIOX.html")
 		else
 			puts "Leaving Developer Mode and resuming program."
 		end
