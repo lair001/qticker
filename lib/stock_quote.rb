@@ -1,4 +1,4 @@
-class StockQuote < StockAttribute
+class StockQuote < QuickTicker::StockAttribute
 
 	def display
 		puts "Current:  #{price} #{change}(#{change_pct})"

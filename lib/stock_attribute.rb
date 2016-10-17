@@ -1,10 +1,12 @@
-class StockAttribute < Table
+module QuickTicker
+	class StockAttribute < QuickTicker::Table
 
-	attr_accessor :stock
+		attr_accessor :stock
 
-	def initialize(data_hash, stock)
-		super(data_hash)
-		self.stock = stock
+		def initialize(data_hash, stock)
+			super(data_hash)
+			self.stock = stock
+		end
+
 	end
-
 end

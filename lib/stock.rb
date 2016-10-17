@@ -1,4 +1,4 @@
-class Stock < Table
+class Stock < QuickTicker::Table
 
 	attr_accessor :quote, :description
 

@@ -10,13 +10,13 @@ describe 'StockAttribute' do
   let(:attribute_data) {{symbol: "FIC", name: "Fiction"}}
 
   let(:stock) {Stock.new(stock_data)}
-  let(:stock_attr) {StockAttribute.new(attribute_data, stock)}
+  let(:stock_attribute) {QuickTicker::StockAttribute.new(attribute_data, stock)}
 
   describe '#initialize' do
     it 'initializes a StockAttr from data that knows about its stock' do
-      expect(stock_attr.symbol).to eq("FIC")
-      expect(stock_attr.name).to eq("Fiction")
-      expect(stock_attr.stock).to eq(stock)
+      expect(stock_attribute.symbol).to eq("FIC")
+      expect(stock_attribute.name).to eq("Fiction")
+      expect(stock_attribute.stock).to eq(stock)
     end
   end
 

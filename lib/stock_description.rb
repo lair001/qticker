@@ -1,4 +1,4 @@
-class StockDescription < StockAttribute
+class StockDescription < QuickTicker::StockAttribute
 
 	def display
 		print "#{sector} : #{industry}\n\n"

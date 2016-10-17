@@ -4,8 +4,8 @@ describe 'Table' do
 
 	describe '#initialize' do
 		it 'creates an object whoses attributes are keys in a hash' do 
-			table1 = Table.new(name: "Richard", age: 43, cats: ["Fluffy", "Doodles"])
-			table2 = Table.new(title: "The Inferno", author: "Dante" )
+			table1 = QuickTicker::Table.new(name: "Richard", age: 43, cats: ["Fluffy", "Doodles"])
+			table2 = QuickTicker::Table.new(title: "The Inferno", author: "Dante" )
 			expect(table1.name).to eq("Richard")
 			expect(table1.age).to eq(43)
 			expect(table1.cats).to eq(["Fluffy", "Doodles"])
