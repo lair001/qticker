@@ -1,7 +1,6 @@
 #!/usr/bin/env ruby
 
-require_relative '../config/environment.rb'
+require_relative '../lib/qticker.rb'
 
 cli = MainCli.new
-
 cli.welcome("Quick Ticker", -> {cli.ticker_symbol_prompt})
