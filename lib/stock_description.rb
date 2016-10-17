@@ -1,4 +1,4 @@
-class StockDescription < StockAttr
+class StockDescription < StockAttribute
 
 	def display
 		print "#{sector} : #{industry}\n\n"

@@ -1,4 +1,4 @@
-class StockAttr < Table
+class StockAttribute < Table
 
 	attr_accessor :stock
 
