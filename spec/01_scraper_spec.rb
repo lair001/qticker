@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'Scraper' do
 
-	let(:cli){Cli.new}
+	let(:cli){QuickTicker::Cli.new}
 	let(:scraper){Scraper.new(cli)}
 
 	describe '#initialize' do

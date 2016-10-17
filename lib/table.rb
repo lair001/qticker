@@ -1,4 +1,5 @@
 module QuickTicker
+
 	class Table
 
 		def initialize(data_hash)
@@ -21,4 +22,5 @@ module QuickTicker
 		end
 
 	end
+
 end

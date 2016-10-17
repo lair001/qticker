@@ -1,4 +1,5 @@
 module QuickTicker
+
 	class StockAttribute < QuickTicker::Table
 
 		attr_accessor :stock
@@ -9,4 +10,5 @@ module QuickTicker
 		end
 
 	end
+
 end

@@ -2,7 +2,7 @@ require 'spec_helper.rb'
 
 describe 'Cli' do 
 
-	let(:cli){Cli.new}
+	let(:cli){QuickTicker::Cli.new}
 
 	let(:data) { {
 				stock: {name: "Fic", symbol: "???", exchange: "FCSE"},
@@ -12,7 +12,7 @@ describe 'Cli' do
 
 	describe '#intialize' do
 		it 'initializes a Cli with a Scraper' do
-			expect(cli).to be_a(Cli)
+			expect(cli).to be_a(QuickTicker::Cli)
 			expect(cli.scraper).to be_a(Scraper)
 			expect(cli.scraper.cli).to eq(cli)
 		end

@@ -2,5 +2,5 @@
 
 require_relative '../config/environment.rb'
 
-cli = MainCli.new
+cli = QuickTicker::MainCli.new
 cli.welcome("Quick Ticker", -> {cli.ticker_symbol_prompt})
