@@ -18,15 +18,30 @@ module QuickTicker
 		end
 
 		def display_stock_quote
-			self.display_stock_header
-			self.stock.quote.display
-			self.stock_option_menu("Display a company description", -> { self.display_stock_description })
+			puts "Current:  #{self.stock.quote.price} #{stock.quote.change}(#{stock.quote.change_pct})"
+			puts "Open:     #{self.stock.quote.open}"
+			puts "Volume:   #{self.stock.quote.volume}"
+			puts "Avg Vol:  #{self.stock.quote.volume_avg}"
+			puts "Mkt Cap:  #{self.stock.quote.mkt_cap}"
+			puts "P/E(ttm): #{self.stock.quote.pe_ttm}"
+			puts "Yield:    #{self.stock.quote.div_yld}%"
 		end
 
 		def display_stock_description
+			print "#{self.stock.description.sector} : #{self.stock.description.industry}\n\n"
+			puts "#{self.stock.description.summary}".fit
+		end
+
+		def fetch_stock_quote
 			self.display_stock_header
-			self.stock.description.display
-			self.stock_option_menu("Redisplay your quote", -> { self.display_stock_quote })
+			self.display_stock_quote
+			self.stock_option_menu("Display a company description", -> { self.fetch_stock_description })
+		end
+
+		def fetch_stock_description
+			self.display_stock_header
+			self.display_stock_description
+			self.stock_option_menu("Redisplay your quote", -> { self.fetch_stock_quote })
 		end
 
 		def stock_option_menu(opt_1_string, opt_1_lambda = nil)
@@ -45,7 +60,7 @@ module QuickTicker
 			valid = self.stock.nil? ? false : true
 			puts "Invalid ticker symbol." if !valid
 			puts "Mutual funds are not currently not supported." if stock_array[1]
-			self.display_stock_quote if valid
+			self.fetch_stock_quote if valid
 			# returns an array.
 			# array[0] - whether the entered symbol was valid
 			# array[1] = stock_array[1] - whether the entered
