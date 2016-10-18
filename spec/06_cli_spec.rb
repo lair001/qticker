@@ -148,7 +148,7 @@ describe 'Cli' do
 
 	describe "fetch_stock_description" do 
 
-		it "displays the stock header and quote and calls the stock option menu" do
+		it "displays the stock header and description and calls the stock option menu" do
 			cli.stock = QuickTicker::Stock.new(data)
 			expect(cli).to receive(:display_stock_header)
 			expect(cli).to receive(:display_stock_description)
@@ -158,9 +158,9 @@ describe 'Cli' do
 
 	end
 
-	describe "fetch_stock_description" do 
+	describe "fetch_stock_related_companies" do 
 
-		it "displays the stock header and quote and calls the stock option menu" do
+		it "displays the stock header and related_companies and calls the stock option menu" do
 			cli.stock = QuickTicker::Stock.new(data)
 			expect(cli).to receive(:display_stock_header)
 			expect(cli).to receive(:display_stock_related_companies)
