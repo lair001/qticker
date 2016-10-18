@@ -61,25 +61,39 @@ describe 'Scraper' do
 
 	end
 
-	describe '#scrape_stock' do 
-		it 'returns a hash containing 3 hashes and an array after calling #scrape_stock_quote, scrape_stock_description and scrape_stock_related_companies' do 
+	describe '#package_stock' do 
+		it 'returns a hash containing 3 hashes and an array after calling #scrap_stock, #scrape_stock_quote, scrape_stock_description and scrape_stock_related_companies' do 
 			scraper.gfs_noko_html = IBM
-			expect(cli.scraper.scrape_stock('IBM')).to be_a(Hash)
-			expect(cli.scraper.scrape_stock('IBM').length).to eq(4)
-			expect(cli.scraper.scrape_stock('IBM')[:stock]).to be_a(Hash)
-			expect(cli.scraper.scrape_stock('IBM')[:quote]).to be_a(Hash)
-			expect(cli.scraper.scrape_stock('IBM')[:description]).to be_a(Hash)
-			expect(cli.scraper.scrape_stock('IBM')[:related_companies]).to be_an(Array)
-			expect(cli.scraper).to receive(:scrape_stock_quote)
-			expect(cli.scraper).to receive(:scrape_stock_description)
-			expect(cli.scraper).to receive(:scrape_stock_related_companies)
-			cli.scraper.scrape_stock('IBM')
+			expect(scraper.package_stock('IBM')).to be_a(Hash)
+			expect(scraper.package_stock('IBM').length).to eq(4)
+			expect(scraper.package_stock('IBM')[:stock]).to be_a(Hash)
+			expect(scraper.package_stock('IBM')[:quote]).to be_a(Hash)
+			expect(scraper.package_stock('IBM')[:description]).to be_a(Hash)
+			expect(scraper.package_stock('IBM')[:related_companies]).to be_an(Array)
+			expect(scraper).to receive(:scrape_stock)
+			expect(scraper).to receive(:scrape_stock_quote)
+			expect(scraper).to receive(:scrape_stock_description)
+			expect(scraper).to receive(:scrape_stock_related_companies)
+			scraper.package_stock('IBM')
 		end
+	end
+
+	describe "scrape_stock" do 
+
+		it "returns a hash of strings" do 
+			scraper.gfs_noko_html = IBM
+			hash = cli.scraper.scrape_stock("IBM")
+			expect(hash).to be_a(Hash)
+			hash.each do |key, value|
+				expect(value).to be_a(String)
+			end
+		end
+
 	end
 
 	describe "scrape_stock_quote" do 
 
-		it "returns a hash" do 
+		it "returns a hash of strings" do 
 			scraper.gfs_noko_html = IBM
 			hash = cli.scraper.scrape_stock_quote
 			expect(hash).to be_a(Hash)

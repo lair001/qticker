@@ -29,24 +29,29 @@ module QuickTicker
 		end
 
 		def create_stock(symbol)
-			data = scrape_stock(symbol)
+			data = package_stock(symbol)
 			QuickTicker::Stock.new(data)
 		end
 
-		def scrape_stock(symbol)
-			data = { stock: {} }
-			data[:stock][:symbol] = symbol
-			begin
-				data[:stock][:name] = self.gfs_noko_html.css("div.g-first a").text.match('(?<=All news for )[\w,.)() ]*(?= »)')[0]
-			rescue NoMethodError
-				data[:stock][:name] = ""
-			end
-			data[:stock][:exchange] = self.gfs_noko_html.css("span.dis-large").text.split("\n")[0]
-			data[:stock] = self.nil_to_empty_str(data[:stock])
+		def package_stock(symbol)
+			data = {}
+			data[:stock] = self.scrape_stock(symbol)
 			data[:quote] = self.scrape_stock_quote
 			data[:description] = self.scrape_stock_description
 			data[:related_companies] = self.scrape_stock_related_companies
 			data
+		end
+
+		def scrape_stock(symbol)
+			data = {}
+			data[:symbol] = symbol
+			begin
+				data[:name] = self.gfs_noko_html.css("div.g-first a").text.match('(?<=All news for )[\w,.)() ]*(?= »)')[0]
+			rescue NoMethodError
+				data[:name] = ""
+			end
+			data[:exchange] = self.gfs_noko_html.css("span.dis-large").text.split("\n")[0]
+			nil_to_empty_str(data)
 		end
 
 		def scrape_stock_quote
