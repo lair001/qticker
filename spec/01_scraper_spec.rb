@@ -1,9 +1,11 @@
 require 'spec_helper'
 
-describe 'Scraper' do
+cli = QuickTicker::Cli.new
+scraper = QuickTicker::Scraper.new(cli)
 
-	let(:cli){QuickTicker::Cli.new}
-	let(:scraper){QuickTicker::Scraper.new(cli)}
+IBM = scraper.load_gfs_noko_html(scraper.gfs_url("IBM"))
+
+describe 'Scraper' do
 
 	describe '#initialize' do
 		it 'makes a new Scraper that knows about its cli' do
@@ -28,13 +30,19 @@ describe 'Scraper' do
 
 	describe '#load_gfs' do 
 		it 'returns a stock for a valid symbol and whether the entered symbol is a mutual fund' do 
-			expect(cli.scraper.load_gfs('MSFT')).to be_an(Array)
-			expect(cli.scraper.load_gfs('MSFT')[0]).to be_a(QuickTicker::Stock)
-			expect(cli.scraper.load_gfs('MSFT')[1]).to eq(false)
-			expect(cli.scraper.load_gfs('FBIOX')[0]).to eq(nil)
-			expect(cli.scraper.load_gfs('FBIOX')[1]).to eq(true)
-			expect(cli.scraper.load_gfs('a1b2c3d4')[0]).to eq(nil)
-			expect(cli.scraper.load_gfs('a1b2c3d4')[1]).to eq(false)
+			stock_array = scraper.load_gfs('MSFT')
+			expect(stock_array).to be_an(Array)
+			expect(stock_array[0]).to be_a(QuickTicker::Stock)
+			expect(stock_array[1]).to eq(false)
+
+			stock_array = scraper.load_gfs('FBIOX')
+			expect(stock_array[0]).to eq(nil)
+			expect(stock_array[1]).to eq(true)
+
+			stock_array = scraper.load_gfs('a1b2c3d4')
+			expect(stock_array[0]).to eq(nil)
+			expect(stock_array[1]).to eq(false)
+
 			expect(cli.scraper).to receive(:create_stock)
 			cli.scraper.load_gfs('MSFT')
 		end
@@ -42,11 +50,11 @@ describe 'Scraper' do
 
 	describe '#create_stock' do
 		it 'calls #scrape_stock and returns a stock' do
-			cli.scraper.load_gfs('GE')
-			expect(cli.scraper.create_stock('GE')).to be_a(QuickTicker::Stock)
-			expect(cli.scraper).to receive(:scrape_stock)
+			scraper.gfs_noko_html = IBM
+			expect(scraper.create_stock('IBM')).to be_a(QuickTicker::Stock)
+			expect(scraper).to receive(:scrape_stock)
 			begin
-				cli.scraper.create_stock('GE')
+				scraper.create_stock('IBM')
 			rescue NoMethodError
 			end
 		end
@@ -55,7 +63,7 @@ describe 'Scraper' do
 
 	describe '#scrape_stock' do 
 		it 'returns a hash containing 3 hashes and an array after calling #scrape_stock_quote, scrape_stock_description and scrape_stock_related_companies' do 
-			cli.scraper.load_gfs('IBM')
+			scraper.gfs_noko_html = IBM
 			expect(cli.scraper.scrape_stock('IBM')).to be_a(Hash)
 			expect(cli.scraper.scrape_stock('IBM').length).to eq(4)
 			expect(cli.scraper.scrape_stock('IBM')[:stock]).to be_a(Hash)
@@ -72,7 +80,7 @@ describe 'Scraper' do
 	describe "scrape_stock_quote" do 
 
 		it "returns a hash" do 
-			cli.scraper.load_gfs('IBM')
+			scraper.gfs_noko_html = IBM
 			hash = cli.scraper.scrape_stock_quote
 			expect(hash).to be_a(Hash)
 			hash.each do |key, value|
@@ -85,7 +93,7 @@ describe 'Scraper' do
 	describe "scrape_stock_description" do 
 
 		it "returns a hash of strings" do 
-			cli.scraper.load_gfs('IBM')
+			scraper.gfs_noko_html = IBM
 			hash = cli.scraper.scrape_stock_description
 			expect(hash).to be_a(Hash)
 			hash.each do |key, value|
@@ -98,7 +106,7 @@ describe 'Scraper' do
 	describe "scrape_stock_related_companies" do 
 
 		it "returns an array of hashes" do 
-			cli.scraper.load_gfs('IBM')
+			scraper.gfs_noko_html = IBM
 			array = cli.scraper.scrape_stock_related_companies
 			expect(array).to be_an(Array)
 			array.each do |hash|
