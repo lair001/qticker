@@ -21,7 +21,22 @@ describe 'Cli' do
 					industry: "Literature",
 					summary: "A lark"
 					},
-				related_companies: [{ symbol: "EEE" }]
+				related_companies: [
+					{
+						symbol: "EEE",
+						price: "12.00",
+						change: "0.50",
+						change_pct: "4.17",
+						mkt_cap: "75.00B"
+					 },
+					 {
+					 	symbol: "GGG",
+					 	price: "18.00",
+					 	change: "0.40",
+						change_pct: "2.22",
+					 	mkt_cap: "55.00B"
+					 }
+					]
 			} }
 
 	describe '#intialize' do
@@ -100,7 +115,59 @@ describe 'Cli' do
 
 	end
 
-	# test coverage for #display_quote, #display_desc provided in tests for MainCli and DevCli
+	describe "#display_stock_related_companies" do 
 
+		it "displays information contained in the related companies of the Cli's stock" do 
+			cli.stock = QuickTicker::Stock.new(data)
+			output = capture_puts{cli.display_stock_related_companies}
+			expect(output).to include("EEE")
+			expect(output).to include("12.00")
+			expect(output).to include("0.50")
+			expect(output).to include("4.17")
+			expect(output).to include("75.00B")
+			expect(output).to include("GGG")
+			expect(output).to include("18.00")
+			expect(output).to include("0.40")
+			expect(output).to include("2.22")
+			expect(output).to include("55.00B")
+		end
+
+	end
+
+	describe "fetch_stock_quote" do 
+
+		it "displays the stock header and quote and calls the stock option menu" do
+			cli.stock = QuickTicker::Stock.new(data)
+			expect(cli).to receive(:display_stock_header)
+			expect(cli).to receive(:display_stock_quote)
+			expect(cli).to receive(:stock_option_menu)
+			cli.fetch_stock_quote
+		end
+
+	end
+
+	describe "fetch_stock_description" do 
+
+		it "displays the stock header and quote and calls the stock option menu" do
+			cli.stock = QuickTicker::Stock.new(data)
+			expect(cli).to receive(:display_stock_header)
+			expect(cli).to receive(:display_stock_description)
+			expect(cli).to receive(:stock_option_menu)
+			cli.fetch_stock_description
+		end
+
+	end
+
+	describe "fetch_stock_description" do 
+
+		it "displays the stock header and quote and calls the stock option menu" do
+			cli.stock = QuickTicker::Stock.new(data)
+			expect(cli).to receive(:display_stock_header)
+			expect(cli).to receive(:display_stock_related_companies)
+			expect(cli).to receive(:stock_option_menu)
+			cli.fetch_stock_related_companies
+		end
+
+	end
 
 end
