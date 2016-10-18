@@ -39,11 +39,36 @@ describe 'Cli' do
 					]
 			} }
 
+	it "knows about its stock" do 
+		stock = QuickTicker::Stock.new(data)
+		cli.stock = stock 
+		expect(cli.stock).to eq(stock)
+	end
+
+	it "knows about its scraper" do 
+		scraper = QuickTicker::Scraper.new(cli)
+		cli.scraper = scraper 
+		expect(cli.scraper).to eq(scraper)
+	end
+
+	it "knows about its last_option_lambda" do 
+		last_option_lambda = -> { cli.fetch_stock_related_companies }
+		cli.last_option_lambda = last_option_lambda 
+		expect(cli.last_option_lambda).to eq(last_option_lambda)
+	end
+
+	it "knows about its exit_message" do 
+		exit_message = "Thank you for using Quick Ticker!\n"
+		cli.exit_message = exit_message 
+		expect(cli.exit_message).to eq(exit_message)
+	end
+
 	describe '#intialize' do
 		it 'initializes a Cli with a Scraper' do
-			expect(cli).to be_a(QuickTicker::Cli)
-			expect(cli.scraper).to be_a(QuickTicker::Scraper)
-			expect(cli.scraper.cli).to eq(cli)
+			new_cli = QuickTicker::Cli.new
+			expect(new_cli).to be_a(QuickTicker::Cli)
+			expect(new_cli.scraper).to be_a(QuickTicker::Scraper)
+			expect(new_cli.scraper.cli).to eq(new_cli)
 		end
 	end
 
@@ -56,15 +81,48 @@ describe 'Cli' do
 		end
 	end
 
-	describe '#stock_option_menu' do 
+	describe "call_stock_option_menu" do
+
+		it 'calls display_stock_option_menu and process_stock_option_menu_input' do
+			expect(cli).to receive(:display_stock_option_menu)
+			expect(cli).to receive(:process_stock_option_menu_input)
+			cli.call_stock_option_menu({ option_1_string: "Display a quote", option_2_string: "Display a company description", option_1_lambda: -> { self.fetch_stock_quote }, option_2_lambda: -> { self.fetch_stock_description }, last_option_lambda: -> {self.last_option_lambda.()} })
+		end
+
+	end
+
+	describe '#display_stock_option_menu' do
+
 		it 'displays a list menu and returns the user\'s input' do 
 			cli.stock = QuickTicker::Stock.new(data)
 			allow(cli).to receive(:gets).and_return("\n", "1")
 			return_value = ""
-			output = capture_puts{return_value = cli.stock_option_menu("Display a company description", "Display related companies")}
+			output = capture_puts{return_value = cli.display_stock_option_menu("Display a company description", "Display related companies")}
 			expect(output).to include("1. Display a company description for ???.\n2. Display related companies for ???.")
 			expect(return_value).to eq("1")
 		end
+
+	end
+
+	describe "process_stock_option_menu_input" do
+
+		it 'calls a lambda or displays an exit message depending on the input' do 
+			cli.last_option_lambda = -> { cli.fetch_stock_related_companies }
+			cli.exit_message = "Thank you for using Quick Ticker!\n"
+
+			expect(cli).to receive(:fetch_stock_quote)
+			cli.process_stock_option_menu_input("1", -> { cli.fetch_stock_quote }, -> { cli.fetch_stock_description }, -> {cli.last_option_lambda.()} )
+
+			expect(cli).to receive(:fetch_stock_description)
+			cli.process_stock_option_menu_input("2", -> { cli.fetch_stock_quote }, -> { cli.fetch_stock_description }, -> {cli.last_option_lambda.()} )
+
+			expect(cli).to receive(:fetch_stock_related_companies)
+			cli.process_stock_option_menu_input("3", -> { cli.fetch_stock_quote }, -> { cli.fetch_stock_description }, -> {cli.last_option_lambda.()} )
+
+			output = capture_puts{cli.process_stock_option_menu_input("\n", -> { cli.fetch_stock_quote }, -> { cli.fetch_stock_description }, -> {cli.last_option_lambda.()} )}
+			expect(output).to include(cli.exit_message)
+		end
+
 	end
 
 	describe "#symbol_validation" do 
@@ -106,6 +164,8 @@ describe 'Cli' do
 
 	end
 
+
+
 	describe '#display_stock_description' do
 
 		it "displays information contained in the description of the Cli's stock" do
@@ -138,11 +198,11 @@ describe 'Cli' do
 
 	describe "fetch_stock_quote" do 
 
-		it "displays the stock header and quote and calls the stock option menu" do
+		it "displays the stock header and quote and calls call_stock_option_menu" do
 			cli.stock = QuickTicker::Stock.new(data)
 			expect(cli).to receive(:display_stock_header)
 			expect(cli).to receive(:display_stock_quote)
-			expect(cli).to receive(:stock_option_menu)
+			expect(cli).to receive(:call_stock_option_menu)
 			cli.fetch_stock_quote
 		end
 
@@ -150,11 +210,11 @@ describe 'Cli' do
 
 	describe "fetch_stock_description" do 
 
-		it "displays the stock header and description and calls the stock option menu" do
+		it "displays the stock header and description and calls call_stock_option_menu" do
 			cli.stock = QuickTicker::Stock.new(data)
 			expect(cli).to receive(:display_stock_header)
 			expect(cli).to receive(:display_stock_description)
-			expect(cli).to receive(:stock_option_menu)
+			expect(cli).to receive(:call_stock_option_menu)
 			cli.fetch_stock_description
 		end
 
@@ -162,11 +222,11 @@ describe 'Cli' do
 
 	describe "fetch_stock_related_companies" do 
 
-		it "displays the stock header and related_companies and calls the stock option menu" do
+		it "displays the stock header and related_companies and calls call_stock_option_menu" do
 			cli.stock = QuickTicker::Stock.new(data)
 			expect(cli).to receive(:display_stock_header)
 			expect(cli).to receive(:display_stock_related_companies)
-			expect(cli).to receive(:stock_option_menu)
+			expect(cli).to receive(:call_stock_option_menu)
 			cli.fetch_stock_related_companies
 		end
 
