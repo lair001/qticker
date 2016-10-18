@@ -80,13 +80,17 @@ module QuickTicker
 		def scrape_stock_related_companies 
 			data = []
 			for i in (0..10) do
-				data << {
-					symbol: self.gfs_noko_html.css("table#cc-table td.ctsymbol")[i].text,
-					price: self.gfs_noko_html.css("table#cc-table td.ctsymbol+td+td")[i].text,
-					change: self.gfs_noko_html.css("table#cc-table td.ctsymbol+td+td+td")[i].text,
-					change_pct: self.gfs_noko_html.css("table#cc-table td.ctsymbol+td+td+td+td")[i].text.chomp("%"),
-					mkt_cap: self.gfs_noko_html.css("table#cc-table td.ctsymbol+td+td+td+td+td+td")[i].text
-				}
+				begin
+					data << {
+						symbol: self.gfs_noko_html.css("table#cc-table td.ctsymbol")[i].text,
+						price: self.gfs_noko_html.css("table#cc-table td.ctsymbol+td+td")[i].text,
+						change: self.gfs_noko_html.css("table#cc-table td.ctsymbol+td+td+td")[i].text,
+						change_pct: self.gfs_noko_html.css("table#cc-table td.ctsymbol+td+td+td+td")[i].text.chomp("%"),
+						mkt_cap: self.gfs_noko_html.css("table#cc-table td.ctsymbol+td+td+td+td+td+td")[i].text
+					}
+				rescue NoMethodError
+					i = 11
+				end
 			end
 			data.collect do |related_company_hash|
 				nil_to_empty_str(related_company_hash)

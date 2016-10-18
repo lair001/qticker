@@ -35,14 +35,22 @@ describe 'Scraper' do
 			expect(cli.scraper.load_gfs('FBIOX')[1]).to eq(true)
 			expect(cli.scraper.load_gfs('a1b2c3d4')[0]).to eq(nil)
 			expect(cli.scraper.load_gfs('a1b2c3d4')[1]).to eq(false)
+			expect(cli.scraper).to receive(:create_stock)
+			cli.scraper.load_gfs('MSFT')
 		end
 	end
 
 	describe '#create_stock' do
-		it 'returns a stock' do
+		it 'calls #scrape_stock and returns a stock' do
 			cli.scraper.load_gfs('GE')
 			expect(cli.scraper.create_stock('GE')).to be_a(QuickTicker::Stock)
+			expect(cli.scraper).to receive(:scrape_stock)
+			begin
+				cli.scraper.create_stock('GE')
+			rescue NoMethodError
+			end
 		end
+
 	end
 
 	describe '#scrape_stock' do 
@@ -54,6 +62,10 @@ describe 'Scraper' do
 			expect(cli.scraper.scrape_stock('IBM')[:quote]).to be_a(Hash)
 			expect(cli.scraper.scrape_stock('IBM')[:description]).to be_a(Hash)
 			expect(cli.scraper.scrape_stock('IBM')[:related_companies]).to be_an(Array)
+			expect(cli.scraper).to receive(:scrape_stock_quote)
+			expect(cli.scraper).to receive(:scrape_stock_description)
+			expect(cli.scraper).to receive(:scrape_stock_related_companies)
+			cli.scraper.scrape_stock('IBM')
 		end
 	end
 
