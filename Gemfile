@@ -2,6 +2,8 @@ source "https://rubygems.org"
 
 gem "nokogiri", '~> 1.6', '>= 1.6.8'
 gem 'word_wrap', '>=1.0.0'
+gem 'watir'
+gem 'phantomjs'
 
 
 

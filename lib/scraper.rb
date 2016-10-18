@@ -2,10 +2,11 @@ module QuickTicker
 
 	class Scraper
 
-		attr_accessor :cli, :gfs_noko_html, :stock
+		attr_accessor :browser, :cli, :gfs_noko_html, :stock
 
 		def initialize(cli)
 			self.cli = cli
+			self.browser = Watir::Browser.new(:phantomjs)
 		end
 
 		def gfs_url(symbol)
@@ -13,7 +14,8 @@ module QuickTicker
 		end
 
 		def load_gfs_noko_html(url)
-			self.gfs_noko_html = Nokogiri::HTML(open(url))
+			browser.goto(url)
+			self.gfs_noko_html = Nokogiri::HTML(browser.html)
 		end
 
 		# Returns an array. Array[0] is a stock if one was succesfully created and nil otherwise.
@@ -43,6 +45,7 @@ module QuickTicker
 			data[:stock] = self.nil_to_empty_str(data[:stock])
 			data[:quote] = self.scrape_stock_quote
 			data[:description] = self.scrape_stock_description
+			data[:related_companies] = self.scrape_stock_related_companies
 			data
 		end
 
@@ -51,7 +54,7 @@ module QuickTicker
 			data[:price] = self.gfs_noko_html.css("span.pr").text.strip
 			data[:change] = self.gfs_noko_html.css("div.nwp span.bld").text.split("\n")[0]
 			begin
-				data[:change_pct] = self.gfs_noko_html.css("div.nwp span.bld").text.split("\n")[1].gsub(/[)(]/, '')
+				data[:change_pct] = self.gfs_noko_html.css("div.nwp span.bld").text.split("\n")[1].gsub(/[)(]/, '').chomp("%")
 			rescue NoMethodError
 				data[:change_pct] = ""
 			end
@@ -72,6 +75,22 @@ module QuickTicker
 			data[:industry] = self.gfs_noko_html.css("a#sector+a").text
 			data[:summary] = self.gfs_noko_html.css("div.companySummary").text.gsub("More from Reuters »", "").strip
 			nil_to_empty_str(data)
+		end
+
+		def scrape_stock_related_companies 
+			data = []
+			for i in (0..10) do
+				data << {
+					symbol: self.gfs_noko_html.css("table#cc-table td.ctsymbol")[i].text,
+					price: self.gfs_noko_html.css("table#cc-table td.ctsymbol+td+td")[i].text,
+					change: self.gfs_noko_html.css("table#cc-table td.ctsymbol+td+td+td")[i].text,
+					change_pct: self.gfs_noko_html.css("table#cc-table td.ctsymbol+td+td+td+td")[i].text.chomp("%"),
+					mkt_cap: self.gfs_noko_html.css("table#cc-table td.ctsymbol+td+td+td+td+td+td")[i].text
+				}
+			end
+			data.collect do |related_company_hash|
+				nil_to_empty_str(related_company_hash)
+			end
 		end
 
 		# convert any nil values to empty strings to avoid exceptions

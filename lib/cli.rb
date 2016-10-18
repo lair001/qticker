@@ -18,7 +18,7 @@ module QuickTicker
 		end
 
 		def display_stock_quote
-			puts "Current:  #{self.stock.quote.price} #{stock.quote.change}(#{stock.quote.change_pct})"
+			puts "Current:  #{self.stock.quote.price} #{stock.quote.change}(#{stock.quote.change_pct}%)"
 			puts "Open:     #{self.stock.quote.open}"
 			puts "Volume:   #{self.stock.quote.volume}"
 			puts "Avg Vol:  #{self.stock.quote.volume_avg}"
