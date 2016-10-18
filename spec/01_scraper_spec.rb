@@ -54,7 +54,7 @@ describe 'Scraper' do
 	end
 
 	describe '#scrape_stock' do 
-		it 'returns a hash containing 3 hashes and an array' do 
+		it 'returns a hash containing 3 hashes and an array after calling #scrape_stock_quote, scrape_stock_description and scrape_stock_related_companies' do 
 			cli.scraper.load_gfs('IBM')
 			expect(cli.scraper.scrape_stock('IBM')).to be_a(Hash)
 			expect(cli.scraper.scrape_stock('IBM').length).to eq(4)
@@ -67,6 +67,45 @@ describe 'Scraper' do
 			expect(cli.scraper).to receive(:scrape_stock_related_companies)
 			cli.scraper.scrape_stock('IBM')
 		end
+	end
+
+	describe "scrape_stock_quote" do 
+
+		it "returns a hash" do 
+			cli.scraper.load_gfs('IBM')
+			hash = cli.scraper.scrape_stock_quote
+			expect(hash).to be_a(Hash)
+			hash.each do |key, value|
+				expect(value).to be_a(String)
+			end
+		end
+
+	end
+
+	describe "scrape_stock_description" do 
+
+		it "returns a hash of strings" do 
+			cli.scraper.load_gfs('IBM')
+			hash = cli.scraper.scrape_stock_description
+			expect(hash).to be_a(Hash)
+			hash.each do |key, value|
+				expect(value).to be_a(String)
+			end
+		end
+
+	end
+
+	describe "scrape_stock_related_companies" do 
+
+		it "returns an array of hashes" do 
+			cli.scraper.load_gfs('IBM')
+			array = cli.scraper.scrape_stock_related_companies
+			expect(array).to be_an(Array)
+			array.each do |hash|
+				expect(hash).to be_a(Hash)
+			end
+		end
+
 	end
 
 	describe '#nil_to_empty_string' do
