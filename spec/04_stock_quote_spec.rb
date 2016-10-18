@@ -16,7 +16,22 @@ describe 'StockQuote' do
 					pe_ttm: "15.25",
 					div_yld: "2.70" },
 				description: {sector: "Fic", summary: "A fairy tale"},
-				related_companies: [{ symbol: "EEE" }]
+				related_companies: [
+					{
+						symbol: "EEE",
+						price: "12.00",
+						change: "0.50",
+						change_pct: "4.17",
+						mkt_cap: "75.00B"
+					 },
+					 {
+					 	symbol: "GGG",
+					 	price: "18.00",
+					 	change: "0.40",
+						change_pct: "2.22",
+					 	mkt_cap: "55.00B"
+					 }
+				]
 			} }
 
 	let(:stock) {QuickTicker::Stock.new(data)}
