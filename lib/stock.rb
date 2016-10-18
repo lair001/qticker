@@ -11,7 +11,7 @@ module QuickTicker
 			self.description = QuickTicker::StockDescription.new(data[:description], self)
 			self.related_companies = []
 			data[:related_companies].each do |related_company_hash|
-				self.related_companies << QuickTicker::StockRelatedCompany.new(related_company_hash)
+				self.related_companies << QuickTicker::StockRelatedCompany.new(related_company_hash, self)
 			end
 		end
 

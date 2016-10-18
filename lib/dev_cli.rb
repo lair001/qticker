@@ -18,26 +18,27 @@ module QuickTicker
 			puts "Or enter any other key to return to"
 			puts "your regularly scheduled program."
 			input = gets.strip.gsub('.', '')
-			path = File.expand_path(File.dirname(__FILE__)) + '/fixtures/'
 			if input == "1"
-				valid = self.symbol_validation("MSFT", false, path + "MSFT.html")
+				valid = self.symbol_validation("MSFT", false, "http://lair001.github.io/fixtures/qticker/MSFT.html")
 			elsif input == "2"
-				valid = self.symbol_validation("IBM", false, path + "IBM.html")
+				valid = self.symbol_validation("IBM", false, "http://lair001.github.io/fixtures/qticker/IBM.html")
 			elsif input == "3"
-				valid = self.symbol_validation("QQQ", false, path + "QQQ.html")
+				valid = self.symbol_validation("QQQ", false, "http://lair001.github.io/fixtures/qticker/QQQ.html")
 			elsif input == "4"
-				valid = self.symbol_validation("FBIOX", false, path + "FBIOX.html")
+				valid = self.symbol_validation("FBIOX", false, "http://lair001.github.io/fixtures/qticker/FBIOX.html")
 			else
 				puts "Leaving Developer Mode and resuming program."
 			end
 			return nil
 		end
 
-		def stock_option_menu(opt_1_string, opt_1_lambda)
-			input = super(opt_1_string, opt_1_lambda)
+		def stock_option_menu(opt_1_string, opt_2_string, opt_1_lambda, opt_2_lambda)
+			input = super(opt_1_string, opt_2_string, opt_1_lambda, opt_2_lambda)
 			if input == "1"
 				opt_1_lambda.()
 			elsif input == "2"
+				opt_2_lambda.()
+			elsif input == "3"
 				self.option_menu
 			else
 				puts "Leaving Developer Mode and resuming program."

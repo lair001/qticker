@@ -23,11 +23,13 @@ module QuickTicker
 			end
 		end
 
-		def stock_option_menu(opt_1_string, opt_1_lambda)
-			input = super(opt_1_string, opt_1_lambda)
+		def stock_option_menu(opt_1_string, opt_2_string, opt_1_lambda, opt_2_lambda)
+			input = super(opt_1_string, opt_2_string, opt_1_lambda, opt_2_lambda)
 			if input == "1"
 				opt_1_lambda.()
 			elsif input == "2"
+				opt_2_lambda.()
+			elsif input == "3"
 				self.ticker_symbol_prompt
 			else
 				return nil

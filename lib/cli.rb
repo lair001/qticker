@@ -32,22 +32,40 @@ module QuickTicker
 			puts "#{self.stock.description.summary}".fit
 		end
 
+		def display_stock_related_companies
+			output = "Symbol  Price                   Mkt Cap\n"
+			self.stock.related_companies.each do |stock_related_company|
+				output += (stock_related_company.symbol + ' ' * 8)[0,8]
+				output += (stock_related_company.price + ' ' * 8)[0,8]
+				output += ("#{stock_related_company.change}(#{stock_related_company.change_pct}%)" + ' ' * 16)[0,16]
+				output += stock_related_company.mkt_cap + "\n"
+			end
+			puts output
+		end
+
 		def fetch_stock_quote
 			self.display_stock_header
 			self.display_stock_quote
-			self.stock_option_menu("Display a company description", -> { self.fetch_stock_description })
+			self.stock_option_menu("Display a company description", "Display related companies", -> { self.fetch_stock_description }, -> { self.fetch_stock_related_companies })
 		end
 
 		def fetch_stock_description
 			self.display_stock_header
 			self.display_stock_description
-			self.stock_option_menu("Redisplay your quote", -> { self.fetch_stock_quote })
+			self.stock_option_menu("Display a quote", "Display related companies", -> { self.fetch_stock_quote }, -> { self.fetch_stock_related_companies })
 		end
 
-		def stock_option_menu(opt_1_string, opt_1_lambda = nil)
+		def fetch_stock_related_companies
+			self.display_stock_header
+			self.display_stock_related_companies
+			self.stock_option_menu("Display a quote", "Display a company description", -> { self.fetch_stock_quote }, -> { self.fetch_stock_description })
+		end
+
+		def stock_option_menu(opt_1_string, opt_2_string, opt_1_lambda = nil, opt_2_lambda = nil)
 			gets
 			puts "1. #{opt_1_string} for #{self.stock.symbol}."
-			puts "2. Enter another ticker symbol."
+			puts "2. #{opt_2_string} for #{self.stock.symbol}."
+			puts "3. Enter another ticker symbol."
 			puts "Enter any other key to exit."
 			gets.strip.gsub('.', '')
 		end
