@@ -9,7 +9,7 @@ describe 'Cli' do
 				quote: {
 				 	price: "123.45",
 					change: "1.23",
-					change_pct: "1.01%",
+					change_pct: "1.01",
 					open: "122.22",
 					volume: "12M",
 					volume_avg: "11M",
@@ -20,7 +20,8 @@ describe 'Cli' do
 					sector: "Fiction",
 					industry: "Literature",
 					summary: "A lark"
-					}
+					},
+				related_companies: [{ symbol: "EEE" }]
 			} }
 
 	describe '#intialize' do
@@ -44,10 +45,10 @@ describe 'Cli' do
 		it 'displays a list menu and returns the user\'s input' do 
 			cli.stock = QuickTicker::Stock.new(data)
 			allow(cli).to receive(:gets).and_return("\n", "1")
-			output = capture_puts{cli.stock_option_menu("Display a company description") }
-			expect(output).to include("1. Display a company description for ???.")
-			allow(cli).to receive(:gets).and_return("\n", "1")
-			expect(cli.stock_option_menu("Display a company description")).to eq("1")
+			return_value = ""
+			output = capture_puts{return_value = cli.stock_option_menu("Display a company description", "Display related companies")}
+			expect(output).to include("1. Display a company description for ???.\n2. Display related companies for ???.")
+			expect(return_value).to eq("1")
 		end
 	end
 

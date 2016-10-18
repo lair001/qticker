@@ -46,13 +46,14 @@ describe 'Scraper' do
 	end
 
 	describe '#scrape_stock' do 
-		it 'returns a hash containing 3 hashes' do 
+		it 'returns a hash containing 3 hashes and an array' do 
 			cli.scraper.load_gfs('IBM')
 			expect(cli.scraper.scrape_stock('IBM')).to be_a(Hash)
-			expect(cli.scraper.scrape_stock('IBM').length).to eq(3)
+			expect(cli.scraper.scrape_stock('IBM').length).to eq(4)
 			expect(cli.scraper.scrape_stock('IBM')[:stock]).to be_a(Hash)
 			expect(cli.scraper.scrape_stock('IBM')[:quote]).to be_a(Hash)
 			expect(cli.scraper.scrape_stock('IBM')[:description]).to be_a(Hash)
+			expect(cli.scraper.scrape_stock('IBM')[:related_companies]).to be_an(Array)
 		end
 	end
 

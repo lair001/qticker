@@ -20,7 +20,8 @@ describe 'StockDescription' do
 					sector: "Fiction",
 					industry: "Literature",
 					summary: "A lark"
-					}
+					},
+				related_companies: [{ symbol: "EEE" }]
 			} }
 
 	let(:stock) {QuickTicker::Stock.new(data)}
@@ -33,16 +34,6 @@ describe 'StockDescription' do
 			expect(description.sector).to eq("Fiction")
 			expect(description.industry).to eq("Literature")
 			expect(description.summary).to eq("A lark")
-		end
-
-	end
-
-	describe '#display' do
-
-		it 'displays a stock description\'s attributes' do
-			output = capture_puts{description.display}
-			expect(output).to include("Fiction : Literature")
-			expect(output).to include("\nA lark")
 		end
 
 	end
