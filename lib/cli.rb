@@ -2,7 +2,7 @@ module QuickTicker
 
 	class Cli
 
-		attr_accessor :stock, :scraper
+		attr_accessor :stock, :scraper, :last_option_lambda, :exit_message
 
 		def initialize(cli = nil)
 			self.scraper = QuickTicker::Scraper.new(self)
@@ -46,28 +46,46 @@ module QuickTicker
 		def fetch_stock_quote
 			self.display_stock_header
 			self.display_stock_quote
-			self.stock_option_menu("Display a company description", "Display related companies", -> { self.fetch_stock_description }, -> { self.fetch_stock_related_companies })
+			self.call_stock_option_menu({ option_1_string: "Display a company description", option_2_string: "Display related companies", option_1_lambda: -> { self.fetch_stock_description }, option_2_lambda: -> { self.fetch_stock_related_companies }, last_option_lambda: -> {self.last_option_lambda.()} })
 		end
 
 		def fetch_stock_description
 			self.display_stock_header
 			self.display_stock_description
-			self.stock_option_menu("Display a quote", "Display related companies", -> { self.fetch_stock_quote }, -> { self.fetch_stock_related_companies })
+			self.call_stock_option_menu({ option_1_string: "Display a quote", option_2_string: "Display related companies", option_1_lambda: -> { self.fetch_stock_quote }, option_2_lambda: -> { self.fetch_stock_related_companies }, last_option_lambda: -> {self.last_option_lambda.()} })
 		end
 
 		def fetch_stock_related_companies
 			self.display_stock_header
 			self.display_stock_related_companies
-			self.stock_option_menu("Display a quote", "Display a company description", -> { self.fetch_stock_quote }, -> { self.fetch_stock_description })
+			self.call_stock_option_menu({ option_1_string: "Display a quote", option_2_string: "Display a company description", option_1_lambda: -> { self.fetch_stock_quote }, option_2_lambda: -> { self.fetch_stock_description }, last_option_lambda: -> {self.last_option_lambda.()} })
 		end
 
-		def stock_option_menu(opt_1_string, opt_2_string, opt_1_lambda = nil, opt_2_lambda = nil)
+		def call_stock_option_menu(option_hash)
+			input = display_stock_option_menu(option_hash[:option_1_string], option_hash[:option_2_string])
+			process_stock_option_menu_input(input, option_hash[:option_1_lambda], option_hash[:option_2_lambda], option_hash[:last_option_lambda])
+		end
+
+		def display_stock_option_menu(option_1_string, option_2_string)
 			gets
-			puts "1. #{opt_1_string} for #{self.stock.symbol}."
-			puts "2. #{opt_2_string} for #{self.stock.symbol}."
+			puts "1. #{option_1_string} for #{self.stock.symbol}."
+			puts "2. #{option_2_string} for #{self.stock.symbol}."
 			puts "3. Enter another ticker symbol."
 			puts "Enter any other key to exit."
 			gets.strip.gsub('.', '')
+		end
+
+		def process_stock_option_menu_input(input, option_1_lambda, option_2_lambda, option_3_lambda)
+			if input == "1"
+				option_1_lambda.()
+			elsif input == "2"
+				option_2_lambda.()
+			elsif input == "3"
+				option_3_lambda.()
+			else
+				puts self.exit_message
+				return nil
+			end
 		end
 
 		def symbol_validation(symbol, fixture_url = nil)

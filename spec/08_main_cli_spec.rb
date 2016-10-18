@@ -48,6 +48,13 @@ describe 'MainCli' do
 
 	describe "symbol_validation" do 
 
+		it "returns whether a ticker symbol is valid" do 
+			silence do
+				expect(main_cli.symbol_validation("MSFT")).to eq(true)
+				expect(main_cli.symbol_validation("abcd1234")).to eq(false)
+			end
+		end
+
 	end
 
 end

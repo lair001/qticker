@@ -7,6 +7,8 @@ module QuickTicker
 		def initialize(cli = nil)
 			super(cli)
 			self.dev = QuickTicker::DevCli.new(self)
+			self.last_option_lambda = -> { self.ticker_symbol_prompt }
+			self.exit_message = "Thank you for using Quick Ticker!\n"
 		end
 
 
@@ -20,19 +22,6 @@ module QuickTicker
 				else
 					valid = self.symbol_validation(symbol)
 				end
-			end
-		end
-
-		def stock_option_menu(opt_1_string, opt_2_string, opt_1_lambda, opt_2_lambda)
-			input = super(opt_1_string, opt_2_string, opt_1_lambda, opt_2_lambda)
-			if input == "1"
-				opt_1_lambda.()
-			elsif input == "2"
-				opt_2_lambda.()
-			elsif input == "3"
-				self.ticker_symbol_prompt
-			else
-				return nil
 			end
 		end
 

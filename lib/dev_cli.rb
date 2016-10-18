@@ -7,6 +7,8 @@ module QuickTicker
 		def initialize(main_cli)
 			super(main_cli)
 			self.main = main_cli
+			self.last_option_lambda = -> { self.option_menu }
+			self.exit_message = "Leaving Developer Mode and resuming program."
 		end
 
 		def option_menu
