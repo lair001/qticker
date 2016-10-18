@@ -19,13 +19,13 @@ module QuickTicker
 			puts "your regularly scheduled program."
 			input = gets.strip.gsub('.', '')
 			if input == "1"
-				valid = self.symbol_validation("MSFT", false, "http://lair001.github.io/fixtures/qticker/MSFT.html")
+				valid = self.symbol_validation("MSFT", "http://lair001.github.io/fixtures/qticker/MSFT.html")
 			elsif input == "2"
-				valid = self.symbol_validation("IBM", false, "http://lair001.github.io/fixtures/qticker/IBM.html")
+				valid = self.symbol_validation("IBM", "http://lair001.github.io/fixtures/qticker/IBM.html")
 			elsif input == "3"
-				valid = self.symbol_validation("QQQ", false, "http://lair001.github.io/fixtures/qticker/QQQ.html")
+				valid = self.symbol_validation("QQQ", "http://lair001.github.io/fixtures/qticker/QQQ.html")
 			elsif input == "4"
-				valid = self.symbol_validation("FBIOX", false, "http://lair001.github.io/fixtures/qticker/FBIOX.html")
+				valid = self.symbol_validation("FBIOX", "http://lair001.github.io/fixtures/qticker/FBIOX.html")
 			else
 				puts "Leaving Developer Mode and resuming program."
 			end
@@ -46,8 +46,8 @@ module QuickTicker
 			end
 		end
 
-		def symbol_validation(symbol, valid, fixture_url = nil)
-			valid_array = super(symbol, valid, fixture_url)
+		def symbol_validation(symbol, fixture_url = nil)
+			valid_array = super(symbol, fixture_url)
 			if valid_array[1] # whether entered symbol was a mutual fund
 				puts ""
 				option_menu

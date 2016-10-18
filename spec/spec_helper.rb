@@ -11,3 +11,19 @@ def capture_puts
     $stdout = old_stdout
   end
 end
+
+def silence
+	begin
+	  # Store the original stderr and stdout in order to restore them later
+	  old_stderr = $stderr
+	  old_stdout = $stdout
+
+	  # Redirect stderr and stdout
+	  $stderr = $stdout = StringIO.new
+
+	  yield
+	ensure
+	  $stderr = old_stderr
+	  $stdout = old_stdout
+	end
+end

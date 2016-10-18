@@ -16,9 +16,9 @@ module QuickTicker
 				print "\nPlease enter a ticker symbol: "
 				symbol = gets.strip.upcase
 				if symbol == "DEV"
-					self.welcome("Developer Mode", -> {self.dev.option_menu}) if symbol == "DEV"
+					self.dev.welcome("Developer Mode", -> {self.dev.option_menu}) if symbol == "DEV"
 				else
-					valid = self.symbol_validation(symbol, valid)
+					valid = self.symbol_validation(symbol)
 				end
 			end
 		end
@@ -36,8 +36,8 @@ module QuickTicker
 			end
 		end
 
-		def symbol_validation(symbol, valid, fixture_url = nil)
-			super(symbol, valid)[0] # returns whether entered symbol was valid
+		def symbol_validation(symbol, fixture_url = nil)
+			super(symbol)[0] # returns whether entered symbol was valid
 		end
 
 	end

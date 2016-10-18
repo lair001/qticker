@@ -70,7 +70,7 @@ module QuickTicker
 			gets.strip.gsub('.', '')
 		end
 
-		def symbol_validation(symbol, valid, fixture_url = nil)
+		def symbol_validation(symbol, fixture_url = nil)
 			# stock_array[0] is a stock if one was succesfully created and nil otherwise.
 			# stock_array[1] indicates whether the symbol cooresponds to a mutual fund.
 			stock_array = self.scraper.load_gfs(symbol, fixture_url)

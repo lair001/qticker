@@ -70,10 +70,12 @@ describe 'Cli' do
 	describe "#symbol_validation" do 
 
 		it 'returns whether a stock symbol is valid and whether it is a mutual fund' do 
-			allow(cli).to receive(:gets).and_return("\n", "\n")
-			expect(cli.symbol_validation('GE', false)).to eq([true, false])
-			expect(cli.symbol_validation('FBIOX', false)).to eq([false, true])
-			expect(cli.symbol_validation('a1b2c3d4', false)).to eq([false, false])
+			silence do
+				allow(cli).to receive(:gets).and_return("\n", "\n")
+				expect(cli.symbol_validation('GE')).to eq([true, false])
+				expect(cli.symbol_validation('FBIOX')).to eq([false, true])
+				expect(cli.symbol_validation('a1b2c3d4')).to eq([false, false])
+			end
 		end
 
 	end
