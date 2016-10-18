@@ -164,8 +164,6 @@ describe 'Cli' do
 
 	end
 
-
-
 	describe '#display_stock_description' do
 
 		it "displays information contained in the description of the Cli's stock" do

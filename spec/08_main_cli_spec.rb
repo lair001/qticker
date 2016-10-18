@@ -5,11 +5,20 @@ describe 'MainCli' do
 	let(:main_cli){QuickTicker::MainCli.new}
 	let(:dev_cli){main_cli.dev}
 
+	it "knows about its DevCli" do 
+		new_dev_cli = QuickTicker::DevCli.new(main_cli)
+		main_cli.dev = new_dev_cli
+		expect(main_cli.dev).to eq(new_dev_cli)
+	end
+
 	describe '#intialize' do
 		it 'initializes a MainCli with a Scraper and a DevCli' do
-			expect(main_cli).to be_a(QuickTicker::MainCli)
-			expect(main_cli.scraper).to be_a(QuickTicker::Scraper)
-			expect(main_cli.dev).to be_a(QuickTicker::DevCli)
+			new_main_cli = QuickTicker::MainCli.new
+			expect(new_main_cli).to be_a(QuickTicker::MainCli)
+			expect(new_main_cli.scraper).to be_a(QuickTicker::Scraper)
+			expect(new_main_cli.dev).to be_a(QuickTicker::DevCli)
+			expect(new_main_cli.scraper.cli).to eq(new_main_cli)
+			expect(new_main_cli.dev.main).to eq(new_main_cli)
 		end
 	end
 
