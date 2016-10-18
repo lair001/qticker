@@ -8,7 +8,7 @@ describe 'StockQuote' do
 				quote: {
 				 	price: "123.45",
 					change: "1.23",
-					change_pct: "1.01%",
+					change_pct: "1.01",
 					open: "122.22",
 					volume: "12M",
 					volume_avg: "11M",
@@ -43,8 +43,13 @@ describe 'StockQuote' do
 			expect(quote).to be_a(QuickTicker::StockQuote)
 			expect(quote.price).to eq("123.45")
 			expect(quote.change).to eq("1.23")
-			expect(quote.change_pct).to eq("1.01%")
+			expect(quote.change_pct).to eq("1.01")
 			expect(quote.open).to eq("122.22")
+			expect(quote.volume).to eq("12M")
+			expect(quote.volume_avg).to eq("11M")
+			expect(quote.mkt_cap).to eq("5B")
+			expect(quote.pe_ttm).to eq("15.25")
+			expect(quote.div_yld).to eq("2.70")
 		end
 
 	end
