@@ -35,11 +35,11 @@ describe 'StockQuote' do
 			} }
 
 	let(:stock) {QuickTicker::Stock.new(data)}
-	let(:quote) {stock.quote}
 
 	describe '#initialize' do
 
 		it 'initializes a stock description from data' do
+			quote = QuickTicker::StockQuote.new(data[:quote], stock)
 			expect(quote).to be_a(QuickTicker::StockQuote)
 			expect(quote.price).to eq("123.45")
 			expect(quote.change).to eq("1.23")
