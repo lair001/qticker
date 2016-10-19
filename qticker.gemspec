@@ -4,7 +4,7 @@ Gem::Specification.new do |s|
   s.version = '1.1.0'
   s.date = '2016-10-18'
   s.summary = 'Quick Ticker: Enter a ticker symbol and get information.'
-  s.description = 'This gem allows the user to enter a ticker symbol and retrieve a quote and company description.'
+  s.description = 'This gem allows the user to enter a ticker symbol and retrieve a quote and company description along with and information on related companies.'
   s.license = 'MIT'
   s.homepage = 'https://github.com/lair001/qticker'
   s.authors = ['Samuel Lair']

@@ -1,6 +1,6 @@
 # Quick Ticker
 
-This ruby gem allows the user to enter a ticker symbol and retrieve a quote and company description scraped from financial websites.
+This ruby gem allows the user to enter a ticker symbol and retrieve a quote and company description along with information on related companies.
 
 ## Installation
 
