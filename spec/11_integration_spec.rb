@@ -7,13 +7,15 @@ describe "Integration Tests" do
 
 	describe 'Example 1' do 
 		it 'welcomes the user and allows the user to enter a stock symbol and view information on the company.' do 
-			allow(main_cli).to receive(:gets).and_return("IBM", "\n", "1", "\n", "\n")
+			allow(main_cli).to receive(:gets).and_return("IBM", "\n", "1", "\n", "2", "\n", "\n")
 			output = capture_puts{main_cli.welcome("Quick Ticker", -> {main_cli.ticker_symbol_prompt})}
 			expect(output).to include("Welcome to Quick Ticker!\n\nPlease enter a ticker symbol:")
 			expect(output).to include("International Business Machines Corp. (NYSE:IBM)\n\nCurrent:")
 			expect(output).to include("International Business Machines Corp. (NYSE:IBM)\n\nTechnology : Technology Consulting & Outsourcing Services")
+			expect(output).to include("International Business Machines Corp. (NYSE:IBM)\n\nSymbol  Price                   Mkt Cap")
 			expect(output).to include("1. Display a company description for IBM.")
 			expect(output).to include("1. Display a quote for IBM.")
+			expect(output).to include("2. Display related companies for IBM.")
 			expect(output).to include("3. Enter another ticker symbol.\nEnter any other key to exit.")
 		end
 	end
