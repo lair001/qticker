@@ -36,7 +36,7 @@ module QuickTicker
 			elsif input == "4"
 				valid = self.symbol_validation("FBIOX", "http://lair001.github.io/fixtures/qticker/FBIOX.html")
 			else
-				puts "Leaving Developer Mode and resuming program."
+				puts self.exit_message
 			end
 			return nil
 		end
