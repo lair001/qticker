@@ -7,11 +7,15 @@ module QuickTicker
 		def initialize(main_cli)
 			super(main_cli)
 			self.main = main_cli
-			self.last_option_lambda = -> { self.option_menu }
+			self.last_option_lambda = -> { self.call_dev_option_menu }
 			self.exit_message = "Leaving Developer Mode and resuming program."
 		end
 
-		def option_menu
+		def call_dev_option_menu 
+			process_dev_option_menu_input(display_dev_option_menu)
+		end
+
+		def display_dev_option_menu
 			puts "\nPlease select a fixture to load:"
 			puts "1. Load MSFT.html"
 			puts "2. Load IBM.html"
@@ -19,7 +23,10 @@ module QuickTicker
 			puts "4. Load FBIOX.html"
 			puts "Or enter any other key to return to"
 			puts "your regularly scheduled program."
-			input = gets.strip.gsub('.', '')
+			gets.strip.gsub('.', '')
+		end
+
+		def process_dev_option_menu_input(input)
 			if input == "1"
 				valid = self.symbol_validation("MSFT", "http://lair001.github.io/fixtures/qticker/MSFT.html")
 			elsif input == "2"
@@ -34,25 +41,10 @@ module QuickTicker
 			return nil
 		end
 
-		def stock_option_menu(opt_1_string, opt_2_string, opt_1_lambda, opt_2_lambda)
-			input = super(opt_1_string, opt_2_string, opt_1_lambda, opt_2_lambda)
-			if input == "1"
-				opt_1_lambda.()
-			elsif input == "2"
-				opt_2_lambda.()
-			elsif input == "3"
-				self.option_menu
-			else
-				puts "Leaving Developer Mode and resuming program."
-				return nil
-			end
-		end
-
 		def symbol_validation(symbol, fixture_url = nil)
 			valid_array = super(symbol, fixture_url)
 			if valid_array[1] # whether entered symbol was a mutual fund
-				puts ""
-				option_menu
+				call_dev_option_menu
 			end
 			valid_array[0] # returns whether entered symbol was valid
 		end

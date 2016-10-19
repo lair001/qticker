@@ -62,8 +62,7 @@ module QuickTicker
 		end
 
 		def call_stock_option_menu(option_hash)
-			input = display_stock_option_menu(option_hash[:option_1_string], option_hash[:option_2_string])
-			process_stock_option_menu_input(input, option_hash[:option_1_lambda], option_hash[:option_2_lambda], option_hash[:last_option_lambda])
+			process_stock_option_menu_input(display_stock_option_menu(option_hash[:option_1_string], option_hash[:option_2_string]), option_hash[:option_1_lambda], option_hash[:option_2_lambda], option_hash[:last_option_lambda])
 		end
 
 		def display_stock_option_menu(option_1_string, option_2_string)

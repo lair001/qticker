@@ -8,7 +8,7 @@ module QuickTicker
 			super(cli)
 			self.dev = QuickTicker::DevCli.new(self)
 			self.last_option_lambda = -> { self.ticker_symbol_prompt }
-			self.exit_message = "Thank you for using Quick Ticker!\n"
+			self.exit_message = "Thank you for using Quick Ticker!"
 		end
 
 
@@ -18,7 +18,7 @@ module QuickTicker
 				print "\nPlease enter a ticker symbol: "
 				symbol = gets.strip.upcase
 				if symbol == "DEV"
-					self.dev.welcome("Developer Mode", -> {self.dev.option_menu}) if symbol == "DEV"
+					self.dev.welcome("Developer Mode", -> {self.dev.call_dev_option_menu}) if symbol == "DEV"
 				else
 					valid = self.symbol_validation(symbol)
 				end

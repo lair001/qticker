@@ -108,7 +108,7 @@ describe 'Cli' do
 
 		it 'calls a lambda or displays an exit message depending on the input' do 
 			cli.last_option_lambda = -> { cli.fetch_stock_related_companies }
-			cli.exit_message = "Thank you for using Quick Ticker!\n"
+			cli.exit_message = "Thank you for using Quick Ticker!"
 
 			expect(cli).to receive(:fetch_stock_quote)
 			cli.process_stock_option_menu_input("1", -> { cli.fetch_stock_quote }, -> { cli.fetch_stock_description }, -> {cli.last_option_lambda.()} )
